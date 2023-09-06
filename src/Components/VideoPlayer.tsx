@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState } from "react";
 
-const YouTubePlayer = ({ videoId }) => {
+const YouTubePlayer = ({ videoId }: { videoId: string }) => {
   const videoRef = useRef(null);
   const [videoData, setVideoData] = useState(null);
 

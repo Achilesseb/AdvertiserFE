@@ -16,5 +16,7 @@
   }
 }
 
-body {
+@font-face {
+  font-family: "Inter-500";
+  src: url("../fonts/Inter-Medium-500.ttf");
 }

@@ -3,13 +3,12 @@ import { useAuthContext } from "@/context/AuthContext";
 
 import React, { useState, useEffect } from "react";
 
-import YouTubePlayer from "./VideoPlayer";
 import { useParams, useRouter } from "next/navigation";
 type Add = {
   uri: string;
 };
 const AdsComponent = () => {
-  const [tabletData, setTabletData] = useState<Add | null>(null);
+  const [tabletData, setTabletData] = useState<Add[] | null>(null);
   const authToken = useAuthContext();
   const { tabletId } = useParams();
   const router = useRouter();
@@ -34,8 +33,8 @@ const AdsComponent = () => {
 
     fetchAds();
   }, []);
-  console.log(tabletData);
-  if (!tabletData) return <></>;
+
+  if (!tabletData) return;
   return (
     <>
       <button
@@ -69,9 +68,7 @@ const AdsComponent = () => {
         </h3>
 
         <div className="flex gap-5 p-10 max-w-max border border-gray-300 rounded">
-          <div className="text-center">
-            <YouTubePlayer videoId={tabletData[0]?.currentlyPlaying.uri} />
-          </div>
+          <div className="text-center"></div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-5 mt-10">
@@ -80,9 +77,7 @@ const AdsComponent = () => {
               Currently playing
             </div>
             <div className="border border-gray-300 rounded text-center py-8 mt-2">
-              <h2 className="text-2xl font-bold pb-2">
-                {tabletData[0].currentlyPlaying.title}
-              </h2>
+              <h2 className="text-2xl font-bold pb-2"></h2>
               <h4 className="inline text-gray-500 text-sm">Title</h4>
             </div>
           </div>
@@ -93,23 +88,16 @@ const AdsComponent = () => {
             </div>
             <div className="flex gap-5 mt-2">
               <div className="flex-grow border border-gray-300 rounded text-center py-8">
-                <h2 className="text-2xl font-bold pb-2">
-                  {" "}
-                  {tabletData[0].driver.Name}
-                </h2>
+                <h2 className="text-2xl font-bold pb-2"> </h2>
                 <h4 className="inline text-gray-500 text-sm">Name</h4>
               </div>
               <div className="flex-grow border border-gray-300 rounded text-center py-8">
-                <h2 className="text-2xl font-bold pb-2">
-                  {tabletData[0].driver.City}
-                </h2>
+                <h2 className="text-2xl font-bold pb-2"></h2>
                 <h4 className="inline text-gray-500 text-sm">City</h4>
               </div>
             </div>
             <div className="flex-grow border border-gray-300 rounded text-center py-8 mt-2">
-              <h2 className="text-2xl font-bold pb-2">
-                {tabletData[0].driver.Phone}
-              </h2>
+              <h2 className="text-2xl font-bold pb-2"></h2>
               <h4 className="inline text-gray-500 text-sm">Phone</h4>
             </div>
           </div>
@@ -119,9 +107,7 @@ const AdsComponent = () => {
             </div>
             <div className="flex gap-5 mt-2">
               <div className="flex-grow border border-gray-300 rounded text-center py-8">
-                <h2 className="text-medium font-bold pb-2">
-                  {tabletData[0].id}
-                </h2>
+                <h2 className="text-medium font-bold pb-2"></h2>
                 <h4 className="inline text-gray-500 text-sm">Tablet id</h4>
               </div>
             </div>
