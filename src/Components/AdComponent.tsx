@@ -1,5 +1,4 @@
 "use client";
-import { useAuthContext } from "@/context/AuthContext";
 
 import React, { useState, useEffect } from "react";
 
@@ -9,7 +8,7 @@ type Add = {
 };
 const AdsComponent = () => {
   const [tabletData, setTabletData] = useState<Add[] | null>(null);
-  const authToken = useAuthContext();
+
   const { tabletId } = useParams();
   const router = useRouter();
 
@@ -17,12 +16,7 @@ const AdsComponent = () => {
     const fetchAds = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/tablets/${tabletId}`,
-          {
-            headers: {
-              authorization: authToken.user.accessToken, // Include the auth token in the headers
-            },
-          }
+          `http://localhost:3000/api/tablets/${tabletId}`
         );
         const data = await response.json();
         setTabletData(data);

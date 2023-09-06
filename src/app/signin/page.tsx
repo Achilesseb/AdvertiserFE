@@ -2,7 +2,6 @@
 import React, { FormEvent, useState } from "react";
 
 import { useRouter } from "next/navigation";
-import { signUp } from "@/firebase/auth";
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -12,7 +11,6 @@ const SignUpPage = () => {
   const handleLoginSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await signUp(email, password);
       router.push("/");
     } catch (err) {
       return console.error(err);
