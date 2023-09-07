@@ -1,4 +1,17 @@
-import { ApolloClient, HttpLink, InMemoryCache, from } from "@apollo/client";
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  from,
+  makeVar,
+} from "@apollo/client";
+
+export type GlobalErrorType = {
+  messageKey: string;
+  messageParams: Record<string, string> | {};
+};
+
+export const globalErrorMessageVar = makeVar<GlobalErrorType[]>([]);
 
 const httpAuthLink = new HttpLink({
   uri: process.env.NEXT_PUBLIC_DB_URI,
@@ -10,6 +23,7 @@ const client = new ApolloClient({
     addTypename: false,
   }),
   link: from([httpAuthLink]),
+  // connectToDevTools: true
 });
 
 export default client;

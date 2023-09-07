@@ -1,5 +1,7 @@
+import { TableHeaderElement } from "@/Components/Table/TableHeader";
 import { createColumnHelper } from "@tanstack/react-table";
 import dayjs from "dayjs";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 export type UserModel = {
   id: string;
@@ -51,7 +53,7 @@ const defaultColumns = [
     cell: (info) => (info.getValue() ? "Yes" : "No"),
     footer: (info) => info.column.id,
   }),
-  // Assuming UserModel has a property called 'lastName'
+
   columnHelper.accessor((row) => row.driver.name, {
     id: "Name",
     header: "Driver",
@@ -70,4 +72,27 @@ const defaultColumns = [
   }),
 ];
 
+export const generateDeviceTableHeaderElements = (
+  router: AppRouterInstance
+): TableHeaderElement[] => [
+  {
+    type: "input",
+    inputPlaceHolder: "Search after city name",
+    styleModifiers:
+      "col-start-1 col-end-3 w-full border-2 rounded-md border-neutral-60 text-center hover:border-primary-60  focus:border-primary-60 focus-ring",
+  },
+  {
+    type: "button",
+    buttonText: "Add new device",
+    style: "filled",
+    styleModifiers: "col-start-7 col-end-9",
+    onClick: () => router.push("/devices/newDevice"),
+  },
+  {
+    type: "button",
+    buttonText: "Delete",
+    style: "outlined",
+    styleModifiers: "col-start-9 col-end-11",
+  },
+];
 export default defaultColumns;

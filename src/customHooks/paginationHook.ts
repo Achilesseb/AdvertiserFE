@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export const usePaginationHook = () => {
-  const [pageEntitiesNumber, setPageEntitiesNumber] = useState<number>(1);
+  const [pageEntitiesNumber, setPageEntitiesNumber] = useState<number>(10);
 
   const [page, setPage] = useState(1);
 

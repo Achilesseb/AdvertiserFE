@@ -12,10 +12,11 @@ import {
   useReactTable,
   ColumnDefBase,
 } from "@tanstack/react-table";
-import PaginationComponent from "./PaginationComponent";
+import PaginationComponent from "../PaginationComponent";
 import { usePaginationHook } from "@/customHooks/paginationHook";
 import { useQuery } from "@apollo/client";
 import { HTMLProps, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const IndeterminateCheckbox = ({
   indeterminate,
@@ -51,6 +52,8 @@ export const TableComponent = <DataType extends {}>({
   const [totalPages, setTotalPages] = useState<number>(0);
   const { resultsPerPage, pageNumber, setPageNumber } = usePaginationHook();
 
+  const router = useRouter();
+
   useQuery(apolloQuery, {
     fetchPolicy: "cache-and-network",
     variables: {
@@ -82,7 +85,7 @@ export const TableComponent = <DataType extends {}>({
         />
       ),
       cell: ({ row }: { row: RowProps }) => (
-        <div className="px-1">
+        <div className="px-1" onClick={(e) => e.stopPropagation()}>
           <IndeterminateCheckbox
             {...{
               checked: row.getIsSelected(),
@@ -133,7 +136,14 @@ export const TableComponent = <DataType extends {}>({
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr
+              key={row.id}
+              onClick={() =>
+                router.push(
+                  `devices/${(row.original as Record<string, unknown>).id}`
+                )
+              }
+            >
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
