@@ -1,13 +1,11 @@
 "use client";
-"use client";
 import { NavigationBar } from "@/Components/NavigationBar";
 import "./globals.css";
 
 import { ReactNode } from "react";
-import { ApolloProvider, useReactiveVar } from "@apollo/client";
-import client, { globalErrorMessageVar } from "../../apolloClient";
-import toast, { Toaster } from "react-hot-toast";
-import { Snackbar } from "@/Components/SnackBar";
+import { ApolloProvider } from "@apollo/client";
+import client from "../../apolloClient";
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
