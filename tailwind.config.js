@@ -15,8 +15,10 @@ module.exports = {
     },
     fontFamily: {
       medium: ["Inter-500"],
+      roboto: ["Roboto-medium"],
     },
     colors: {
+      white: "#FFFFFF",
       primary: {
         10: "#0B2337",
         20: "#143F66",

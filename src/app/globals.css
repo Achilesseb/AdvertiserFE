@@ -20,3 +20,8 @@
   font-family: "Inter-500";
   src: url("../fonts/Inter-Medium-500.ttf");
 }
+
+@font-face {
+  font-family: "Roboto-medium";
+  src: url("../fonts/Roboto-MediumItalic.ttf");
+}
