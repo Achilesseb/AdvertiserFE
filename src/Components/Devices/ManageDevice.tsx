@@ -1,64 +1,89 @@
 "use client";
 import { DevicesValidationSchema } from "@/validationSchemas/devices";
-import GenericForm from "../Form/Form";
 import {
   ADD_NEW_DEVICE,
   EDIT_DEVICE,
   GET_DEVICE_BY_ID,
 } from "@/graphql/schemas/devicesSchema";
-import { deviceTemplate } from "./devicesAnnexes/manageDeviceTemplate";
+import {
+  DevicesFormData,
+  deviceNewFormTemplate,
+} from "./devicesAnnexes/manageDeviceTemplate";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import { useQuery } from "@apollo/client";
-import { DeviceModel } from "./devicesAnnexes/devicesPageTemplate";
-import { FormikValues } from "formik";
+import Form from "../form/FormMain";
+import { GET_ALL_AVAILABLE_DRIVERS } from "@/graphql/schemas/usersSchema";
+import { FormTemplateDefinition } from "../form/formTemplate";
+import { SearchInputComponent } from "../SearchInputComponent";
 
 export const ManageDevice = ({
   searchParams,
   isEditForm = false,
 }: ManageDeviceProps) => {
-  const [deviceId, setDeviceId] = useState<string>("");
-  const [deviceData, setDeviceData] = useState<
-    (DeviceModel & { driverId: string }) | null
-  >(null);
+  const [selectedDriverId, setSelectedDriverId] = useState<string | null>(null);
+  const defaultMutationVariables = {
+    ...(selectedDriverId && { driverId: selectedDriverId }),
+  };
 
   const router = useRouter();
-
-  useQuery<Record<string, DeviceModel>>(GET_DEVICE_BY_ID, {
-    skip: !isEditForm,
-    variables: { deviceId: searchParams?.deviceId },
-    onCompleted: (data) => {
-      const queryKey = Object.keys(data)[0];
-      const dataModel = data?.[queryKey];
-      setDeviceData({
-        ...dataModel,
-        driverId: dataModel.driver.id,
-      });
-      setDeviceId(dataModel.id);
-    },
-  });
 
   const handleCancelFormSubmit = useCallback(() => {
     router.replace("/devices");
   }, [router]);
 
-  const editFormSubmitHelper = (mutationValues: FormikValues) => ({
-    ...mutationValues,
-    id: deviceId,
-  });
+  const formStylesModifiers = {
+    formContainerStyles:
+      "relative h-full flex flex-col gap-4 justify-start desktop:w-6/12 laptop:w-8/12",
+    formInputsContainerStyles: "flex flex-col gap-4 mb-4 mt-4",
+    formTitleStyles:
+      "flex justify-between desktop:w-6/12 laptop:w-8/12 mb-2 mt-2 ",
+    formButtonContainerStyles: "mb-4  bottom-0 w-full flex",
+  };
 
-  if (isEditForm && !deviceData) return;
+  const devicesTemplate: FormTemplateDefinition<DevicesFormData> = {
+    name: {
+      ...deviceNewFormTemplate.driver,
+      disabled: isEditForm,
+      ...(!isEditForm && {
+        type: "react-element",
+        element: (formTrigger, errors, props) => (
+          <SearchInputComponent
+            setSelectedEntityId={setSelectedDriverId}
+            queryExpression={GET_ALL_AVAILABLE_DRIVERS}
+            formTrigger={formTrigger}
+            formTemplate={deviceNewFormTemplate}
+            errors={errors}
+            entityIdentifier="name"
+            formFieldIdentifier="driverId"
+            filterFieldIdentifier="name"
+            {...props}
+          />
+        ),
+      }),
+    },
+    identifier: deviceNewFormTemplate.identifier,
+    system: deviceNewFormTemplate.system,
+    location: deviceNewFormTemplate.location,
+    inUse: deviceNewFormTemplate.inUse,
+  };
 
   return (
-    <GenericForm<DeviceFormFields, DeviceModel>
-      template={deviceTemplate}
+    <Form
+      headlessForm={false}
+      queryExpression={GET_DEVICE_BY_ID}
+      mutationExpression={isEditForm ? EDIT_DEVICE : ADD_NEW_DEVICE}
       validationSchema={DevicesValidationSchema}
-      mutationQuery={isEditForm ? EDIT_DEVICE : ADD_NEW_DEVICE}
-      handleCancelFormSubmit={handleCancelFormSubmit}
+      formTemplate={devicesTemplate}
+      handleCancelButton={handleCancelFormSubmit}
+      skipQuery={!isEditForm}
+      formTitle="Informatii despre dispozitiv"
+      formStylesModifier={formStylesModifiers}
       redirectRoute="/devices"
-      isEditForm={isEditForm}
-      mutationMappingFunc={editFormSubmitHelper}
-      {...(deviceData && { externalData: deviceData })}
+      defaultMutationVariables={defaultMutationVariables}
+      {...(isEditForm && {
+        entityID: searchParams?.deviceId,
+        entityVariable: "deviceId",
+      })}
     />
   );
 };

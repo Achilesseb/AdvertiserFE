@@ -23,8 +23,8 @@ const getHeaderElement = ({ type, ...rest }: TableHeaderElement) => {
       element = (
         <input
           key={inputProps.inputPlaceHolder}
+          onChange={inputProps.onChange}
           type="text"
-          autoFocus
           className={inputProps.styleModifiers}
           placeholder={inputProps.inputPlaceHolder}
           aria-label="Username"
@@ -48,7 +48,7 @@ type HeaderInputProps = {
   type: "input";
   inputPlaceHolder?: string;
   styleModifiers?: string;
-  onChange?: () => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 export type TableHeaderElement =
   | {
@@ -60,13 +60,13 @@ export type TableHeaderElement =
 export const TableHeader = ({
   elements,
 }: {
-  elements: TableHeaderElement[];
+  elements: Record<string, TableHeaderElement>;
 }) => {
-  if (_.isNil(elements) || !_.isArray(elements)) return;
+  if (_.isNil(elements) || !_.isObject(elements)) return;
 
   return (
     <div className="grid grid-cols-10 gap-4">
-      {elements.map((element) => getHeaderElement(element))}
+      {Object.values(elements).map((element) => getHeaderElement(element))}
     </div>
   );
 };

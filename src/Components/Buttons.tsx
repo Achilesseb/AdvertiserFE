@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-export type EWButtonProps = {
+export type DefaultButtonComponentProps = {
   buttonText: string;
   buttonType?: "button" | "submit" | "reset";
   styleType: "filled" | "outlined" | "dirty";
@@ -17,7 +17,7 @@ const ADVButton = ({
   onButtonClick,
   styleType,
   disabled = false,
-}: EWButtonProps) => {
+}: DefaultButtonComponentProps) => {
   const defaultButton =
     "flex items-center justify-center h-10 gap-2 px-10 font-medium border border-2 rounded-xl min-w-18 transition ease-in-out duration-200 text-labelLarge box-border";
 

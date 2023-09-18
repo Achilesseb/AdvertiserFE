@@ -44,9 +44,13 @@ const IndeterminateCheckbox = ({
 export const TableComponent = <DataType extends {}>({
   apolloQuery,
   columns,
+  filters,
+  routerPath,
 }: {
   apolloQuery: DocumentNode;
   columns: Array<ColumnDefBase<DataType, string>>;
+  filters?: Record<string, unknown>;
+  routerPath: string;
 }) => {
   const [dataToRender, setDataToRender] = useState<Array<DataType>>([]);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -62,6 +66,9 @@ export const TableComponent = <DataType extends {}>({
           entitiesPerPage: resultsPerPage,
           page: pageNumber,
         },
+        filters: {
+          ...filters,
+        },
       },
     },
     onCompleted: (data) => {
@@ -73,6 +80,14 @@ export const TableComponent = <DataType extends {}>({
   });
 
   const finalColumns = [
+    {
+      id: "id",
+      header: "Nr.",
+      cell: ({ row }: { row: RowProps }) =>
+        (pageNumber - 1) * resultsPerPage + parseInt(row?.id ?? "0") + 1,
+      footer: ({ column }: { column: RowProps }) => column.id,
+    },
+    ...columns,
     {
       id: "select",
       header: ({ table }: { table: Table<DataType> }) => (
@@ -97,7 +112,6 @@ export const TableComponent = <DataType extends {}>({
         </div>
       ),
     },
-    ...columns,
   ];
 
   const table = useReactTable<DataType>({
@@ -122,7 +136,7 @@ export const TableComponent = <DataType extends {}>({
           {table?.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th key={header.id} className=" text-center">
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -140,12 +154,14 @@ export const TableComponent = <DataType extends {}>({
               key={row.id}
               onClick={() =>
                 router.push(
-                  `devices/${(row.original as Record<string, unknown>).id}`
+                  `${routerPath}/${
+                    (row.original as Record<string, unknown>).id
+                  }`
                 )
               }
             >
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
+                <td key={cell.id} className=" text-center">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}

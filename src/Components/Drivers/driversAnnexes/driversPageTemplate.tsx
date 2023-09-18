@@ -2,7 +2,13 @@ import { TableHeaderElement } from "@/Components/Table/TableHeader";
 import { createColumnHelper } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
-import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+import {
+  AiOutlineAntDesign,
+  AiOutlineCar,
+  AiOutlineCheck,
+  AiOutlineClose,
+  AiOutlinePhone,
+} from "react-icons/ai";
 export type UserModel = {
   id: string;
   address: string;
@@ -12,68 +18,87 @@ export type UserModel = {
   phone: string;
   team: string;
   email: string;
-  carDetails: string;
+  car: string;
   tabletId: string;
   tablets: number;
   role: string;
   createdAt: string;
+  teamName: string;
 };
 
 export type DeviceModel = {
-  identifier: string;
+  id: string;
   createdAt: string;
   system: string;
   location: string;
   inUse: boolean;
   driver: UserModel;
   identificator: string;
+  teamName: string;
 };
 
-const columnHelper = createColumnHelper<DeviceModel>();
+const columnHelper = createColumnHelper<UserModel>();
 
-const defaultColumns = [
-  columnHelper.accessor("identifier", {
-    header: "Device",
+const driversDefaultColumns = [
+  columnHelper.accessor("name", {
+    header: "Name",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
-
-  columnHelper.accessor("system", {
-    header: "System",
+  columnHelper.accessor("city", {
+    header: "City",
     cell: (info) => info.getValue(),
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor("location", {
-    header: "Location",
-    cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("inUse", {
-    header: "In Use",
-    cell: (info) =>
-      info.getValue() ? (
-        <AiOutlineCheck color="#008000" />
-      ) : (
-        <AiOutlineClose color="#FF0000" />
-      ),
+  columnHelper.accessor("phone", {
+    header: "Phone",
+    cell: (info) => (
+      <div className="flex gap-2 items-center">
+        <AiOutlinePhone color="#008000" />
+        {info.getValue()}
+      </div>
+    ),
+
     footer: (info) => info.column.id,
   }),
 
-  columnHelper.accessor((row) => row.driver?.name, {
-    id: "Name",
-    header: "Driver",
+  columnHelper.accessor("car", {
+    header: "Car",
+    cell: (info) => (
+      <div className="flex gap-2 items-center">
+        <AiOutlineCar color="#008000" />
+        {info.getValue()}
+      </div>
+    ),
+
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor("registrationPlate", {
+    header: "Plate",
+    cell: (info) => (
+      <div className="flex gap-2 items-center">
+        <AiOutlineAntDesign color="#008000" />
+        {info.getValue()}
+      </div>
+    ),
+
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor("email", {
+    id: "email",
+    header: "Email",
     cell: (info) => <i>{info.getValue()}</i>,
     footer: (info) => info.column.id,
   }),
-
-  columnHelper.accessor("createdAt", {
-    header: "Created At",
-    cell: (info) => dayjs(info.getValue()).format("DD-MM-YYYY"),
+  columnHelper.accessor("teamName", {
+    id: "teamName",
+    header: "Team",
+    cell: (info) => <i>{info.getValue()}</i>,
     footer: (info) => info.column.id,
   }),
 ];
 
-export const generateDeviceTableHeaderElements = (
+export const generateDriversTableHeaderElements = (
   router: AppRouterInstance
 ): Record<string, TableHeaderElement> => ({
   searchInput: {
@@ -96,4 +121,4 @@ export const generateDeviceTableHeaderElements = (
     styleModifiers: "col-start-9 col-end-11",
   },
 });
-export default defaultColumns;
+export default driversDefaultColumns;

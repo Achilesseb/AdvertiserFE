@@ -9,27 +9,47 @@ export const GET_ALL_DEVICES = gql`
         system
         location
         inUse
-        identifier
         driver {
           id
           name
-          address
-          registrationPlate
-          phone
-          team
-          email
-          carDetails
-          tabletId
-          city
-          tablets
-          role
         }
+        identifier
       }
       count
     }
   }
 `;
 
+export const GET_ALL_AVAILABLE_DEVICES = gql`
+  query GetAllAvailableDevices($input: GetAllDevicesInput) {
+    getAllAvailableDevices(input: $input) {
+      data {
+        id
+        createdAt
+        system
+        location
+        inUse
+        driver {
+          id
+          name
+          address
+          registrationPlate
+          phone
+          teamName
+          email
+          car
+          deviceId
+          city
+          tablets
+          role
+          createdAt
+        }
+        identifier
+      }
+      count
+    }
+  }
+`;
 export const GET_DEVICE_BY_ID = gql`
   query GetDeviceById($deviceId: String!) {
     getDeviceById(deviceId: $deviceId) {
@@ -42,16 +62,6 @@ export const GET_DEVICE_BY_ID = gql`
       driver {
         id
         name
-        address
-        registrationPlate
-        phone
-        team
-        email
-        carDetails
-        tabletId
-        city
-        tablets
-        role
       }
     }
   }
@@ -65,21 +75,11 @@ export const ADD_NEW_DEVICE = gql`
       system
       location
       inUse
+      identifier
       driver {
         id
         name
-        address
-        registrationPlate
-        phone
-        team
-        email
-        carDetails
-        tabletId
-        city
-        tablets
-        role
       }
-      identifier
     }
   }
 `;
@@ -92,21 +92,11 @@ export const EDIT_DEVICE = gql`
       system
       location
       inUse
+      identifier
       driver {
         id
         name
-        address
-        registrationPlate
-        phone
-        team
-        email
-        carDetails
-        tabletId
-        city
-        tablets
-        role
       }
-      identifier
     }
   }
 `;

@@ -1,39 +1,87 @@
+import { FormTemplateDefinition } from "@/Components/form/formTemplate";
+
 export type FormFieldsTemplate = {
   name: string;
   label: string;
   defaultValue: string | boolean | number;
-  type: "input";
+  type: "input" | "checkbox" | "select";
 };
 
-export const deviceTemplate: FormFieldsTemplate[] = [
-  {
-    name: "driverId",
+export type DevicesFormData = {
+  driver: string;
+  identifier: string;
+  location: string;
+  system: string;
+  inUse: boolean;
+  team: string;
+};
+
+export const deviceNewFormTemplate: FormTemplateDefinition<DevicesFormData> = {
+  driver: {
+    fieldName: "name",
+    nested: true,
+    disabled: true,
+    nestingKey: "driver",
+    label: "Driver name",
     type: "input",
-    label: "Driver",
-    defaultValue: "",
+    containerClassName: "w-full relative z-30",
+    i18nIdentifier: "driver-name",
+    constraints: {
+      max: 200,
+      min: 5,
+    },
+    excludeFromMutation: true,
+    errorTextClassName:
+      "absolute text-error-40 left-0 bottom-0  text-labelSmall block text-right",
   },
-  {
-    name: "identifier",
-    label: "Identifier",
+  identifier: {
+    fieldName: "identifier",
+    label: "Device identifier",
     type: "input",
-    defaultValue: "",
+    labelRequiredClassName: "text-neutral-60",
+    i18nIdentifier: "service-details",
+
+    constraints: {
+      max: 500,
+      min: 15,
+    },
   },
-  {
-    name: "inUse",
-    label: "Active",
+
+  location: {
+    fieldName: "location",
+    label: "Location",
     type: "input",
-    defaultValue: false,
+    labelRequiredClassName: "text-neutral-60",
+    i18nIdentifier: "service-details",
+
+    constraints: {
+      max: 500,
+      min: 15,
+    },
   },
-  {
-    name: "location",
-    label: "City",
+  system: {
+    fieldName: "system",
+    label: "Device system",
     type: "input",
-    defaultValue: "Cluj-Napoca",
+    labelRequiredClassName: "text-neutral-60",
+    i18nIdentifier: "service-details",
+    constraints: {
+      max: 500,
+      min: 15,
+    },
   },
-  {
-    name: "system",
-    label: "Operating System",
-    type: "input",
-    defaultValue: "Pixel 20",
+  inUse: {
+    fieldName: "inUse",
+    label: "Device in use",
+    type: "checkbox",
+    containerClassName: "w-full relative z-10",
+    disabled: false,
+    excludeFromMutation: false,
+    defaultFieldValue: false,
+    i18nIdentifier: "frequency",
+    constraints: {
+      max: 200,
+      min: 5,
+    },
   },
-];
+};
