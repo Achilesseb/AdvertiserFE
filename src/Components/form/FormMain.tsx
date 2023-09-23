@@ -37,6 +37,7 @@ const Form = <DataType extends {}, U extends FieldValues>({
   i18nPath,
   i18nFormObjectPath,
   generateCustomSectionButtons,
+  generateCustomFormButtons,
   formStylesModifier,
   customFormControl,
   customFormErrors,
@@ -112,34 +113,34 @@ const Form = <DataType extends {}, U extends FieldValues>({
   });
 
   const handleFormSubmit = (data: U) => {
-    return (
-      customFormSubmit?.(data, reset) ??
-      handleEWFormSubmit<DataType, U>({
-        data,
-        formTemplate,
-        customMappingFunc,
-        entityID,
-        entityVariable,
-        editEntityTemplateMutation: handleEntityMutation,
-        defaultMutationVariables,
-        redirectRoute,
-        formSuccessObserver,
-        formSuccessAction,
-        showSnackBar,
-        router,
-      })
-    );
+    if (customFormSubmit)
+      return customFormSubmit?.(data, reset, handleEntityMutation);
+
+    return handleEWFormSubmit<DataType, U>({
+      data,
+      formTemplate,
+      customMappingFunc,
+      entityID,
+      entityVariable,
+      editEntityTemplateMutation: handleEntityMutation,
+      defaultMutationVariables,
+      redirectRoute,
+      formSuccessObserver,
+      formSuccessAction,
+      showSnackBar,
+      router,
+    });
   };
 
-  const generateFormButtons = useCallback(
-    () => (
+  const generateFormButtons = useCallback(() => {
+    if (generateCustomFormButtons) return generateCustomFormButtons();
+    return (
       <FormBasicButtons
         handleCancelButton={handleCancelButton}
         isDirty={isDirty}
       />
-    ),
-    [handleCancelButton, isDirty]
-  );
+    );
+  }, [handleCancelButton, isDirty, generateCustomFormButtons]);
 
   const generateSectionTitle = useCallback(() => {
     if (!sectionTitle) return null;

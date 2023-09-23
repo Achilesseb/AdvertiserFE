@@ -1,17 +1,17 @@
 import { generateFormData } from "./formUtilis";
-import { MutationFunction } from "@apollo/client";
+import { FetchResult, MutationFunction } from "@apollo/client";
 import { Dispatch, SetStateAction } from "react";
 import { FieldValues } from "react-hook-form";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { FormTemplateDefinition } from "@/Components/form/formTemplate";
 
-type HandleSubmitPropTypes<U extends FieldValues> = {
+type HandleSubmitPropTypes<T extends {}, U extends FieldValues> = {
   data: U;
   formTemplate: FormTemplateDefinition<U>;
-  defaultMutationVariables?: Record<string, string | boolean>;
+  defaultMutationVariables?: Record<string, string | boolean> | null;
   redirectRoute?: string;
   formSuccessObserver?: string;
-  formSuccessAction?: () => void;
+  formSuccessAction?: (response: FetchResult<T>) => void;
   showSnackBar?: <T extends {}>(response: T) => void;
   customMappingFunc?: <U extends {}>(
     formTemplate: FormTemplateDefinition<U>,
@@ -39,11 +39,10 @@ export const handleEWFormSubmit = async <T extends {}, U extends FieldValues>({
   setUncaughtError,
   showSnackBar,
   router,
-}: HandleSubmitPropTypes<U>) => {
+}: HandleSubmitPropTypes<T, U>) => {
   const formData =
     customMappingFunc?.(formTemplate, data) ??
     generateFormData<U>(formTemplate, data);
-  console.log(formData, defaultMutationVariables);
   try {
     const response = await editEntityTemplateMutation({
       variables: {
@@ -59,13 +58,13 @@ export const handleEWFormSubmit = async <T extends {}, U extends FieldValues>({
     showSnackBar?.<T>(response?.data?.[mutationKey[0]]);
 
     if (redirectRoute) {
-      await router.push(
+      router.push(
         `${redirectRoute}?action=true&${entityID ? "type=update" : "type=add"}`
       );
     }
 
     if (formSuccessAction) {
-      formSuccessAction();
+      formSuccessAction(response as unknown as FetchResult<T>);
     }
   } catch (err) {
     setUncaughtError?.(err as string);

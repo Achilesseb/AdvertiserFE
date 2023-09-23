@@ -121,3 +121,9 @@ export const ADD_NEW_USER = gql`
     }
   }
 `;
+
+export const DELETE_USER = gql`
+  mutation Mutation($usersIds: [String]!) {
+    deleteUser(usersIds: $usersIds)
+  }
+`;

@@ -2,22 +2,23 @@
 import { ColumnDefBase } from "@tanstack/react-table";
 import { TableComponent } from "../Table/Table";
 
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Snackbar } from "../SnackBar";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { TableHeader } from "../Table/TableHeader";
 import driversDefaultColumns, {
   generateDriversTableHeaderElements,
 } from "./driversAnnexes/driversPageTemplate";
-import { GET_ALL_USERS } from "@/graphql/schemas/usersSchema";
+import { DELETE_USER, GET_ALL_USERS } from "@/graphql/schemas/usersSchema";
 import { DeviceModel } from "../Devices/devicesAnnexes/devicesPageTemplate";
+import { useMutation } from "@apollo/client";
 
 export const AllDriversPage = ({
   searchParams,
 }: {
   searchParams: Record<string, string | boolean>;
 }) => {
+  const [toDeleteDataIds, setToDeleteDataIds] = useState<Array<string>>([]);
   const [cityFilter, setCityFilter] = useState<string>("");
   const router = useRouter();
 
@@ -35,30 +36,40 @@ export const AllDriversPage = ({
     }
   }, [searchParams, router]);
 
-  const deviceTableHeaderElements = generateDriversTableHeaderElements(router);
+  const [deleteEntities] = useMutation(DELETE_USER, {
+    variables: {
+      usersIds: toDeleteDataIds,
+    },
+  });
 
-  const polishedDeviceTableHeaderElements = {
+  const driverTableHeaderElements = generateDriversTableHeaderElements(router);
+
+  const polishedDriverTableHeaderElements = {
     searchInput: {
-      ...deviceTableHeaderElements.searchInput,
+      ...driverTableHeaderElements.searchInput,
       onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
         setCityFilter(event.target.value as string),
     },
-    addNew: deviceTableHeaderElements.addNew,
-    delete: deviceTableHeaderElements.delete,
+    addNew: driverTableHeaderElements.addNew,
+    delete: {
+      ...driverTableHeaderElements.delete,
+      onClick: deleteEntities,
+    },
   };
 
   return (
     <div className="h-full px-20 py-4 flex flex-col gap-4">
-      <h3 className="text-2xl">Devices data</h3>
-      <TableHeader elements={polishedDeviceTableHeaderElements} />
       <TableComponent<UserModel>
         apolloQuery={GET_ALL_USERS}
+        setToDeleteDataIds={setToDeleteDataIds}
+        headerData="Drivers data"
         routerPath="/drivers"
         columns={
           driversDefaultColumns as unknown as Array<
             ColumnDefBase<UserModel, string>
           >
         }
+        polishedHeaderElements={polishedDriverTableHeaderElements}
         {...(cityFilter && {
           filters: { city: cityFilter },
         })}
@@ -76,7 +87,7 @@ export type UserModel = {
   phone: string;
   team: string;
   email: string;
-  carDetails: string;
+  car: string;
   tablets: number;
   role: string;
   createdAt: string;

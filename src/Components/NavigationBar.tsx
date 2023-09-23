@@ -1,6 +1,24 @@
+import { supabase } from "@/supabase";
+import { AuthSession } from "@supabase/supabase-js";
+import { useState, useEffect } from "react";
+import { AiOutlineUser } from "react-icons/ai";
+
 export const NavigationBar = () => {
+  const [session, setSession] = useState<AuthSession | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setLoading(false);
+    });
+  }, []);
+
   return (
-    <nav className="w-full grid grid-cols-4 items-center bg-primary-50 p-3 text-white">
+    <nav className="w-full grid grid-cols-6 items-center bg-primary-50 py-4 text-white px-10">
       <a href="/" className="p-2 mr-4 inline-flex items-center no-underline">
         <svg
           viewBox="0 0 24 24"
@@ -16,57 +34,68 @@ export const NavigationBar = () => {
       </a>
 
       <div
-        className="top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto col-start-3 col-end-5 "
+        className="top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto col-start-3 col-end-7 "
         id="navigation"
       >
-        <ul className="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto flex w-full h-full m-0 lg:items-center lg:h-auto justify-evenly ">
+        <ul className=" lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto flex w-full h-full m-0 lg:items-center lg:h-auto justify-evenly ">
           <li>
             <a
-              href="#"
-              className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center justify-center hover:bg-gray-900 hover:text-white no-underline"
+              href="/"
+              className=" flex lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl hover:text-primary-40   items-center justify-center  hover:bg-white no-underline"
             >
-              <span>Home</span>
+              <span className=" ">Dashboard</span>
             </a>
           </li>
           <li>
             <a
-              href="#"
-              className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center justify-center hover:bg-gray-900 hover:text-white no-underline"
+              href="/clients"
+              className="flex lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center hover:text-primary-40   justify-center hover:bg-white  no-underline"
             >
-              <span>About</span>
+              <span className="">Clients</span>
             </a>
           </li>
           <li>
             <a
               href="/drivers"
-              className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center justify-center hover:bg-gray-900 hover:text-white no-underline"
+              className=" flex lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center justify-center hover:text-primary-40   hover:bg-white  no-underline"
             >
-              <span>Drivers</span>
+              <span className="">Drivers</span>
             </a>
           </li>
           <li>
             <a
               href="/devices"
-              className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center justify-center hover:bg-gray-900 hover:text-white no-underline"
+              className=" flex lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center hover:text-primary-40   justify-center hover:bg-white  no-underline"
             >
-              <span>Devices</span>
+              <span className="">Devices</span>
             </a>
           </li>
           <li>
             <a
-              href="#"
-              className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center justify-center hover:bg-gray-900 hover:text-white no-underline"
+              href="/teams"
+              className=" flex  lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center justify-center hover:bg-white hover:text-primary-40   no-underline"
             >
-              <span>Products</span>
+              <span className=" ">Teams</span>
             </a>
           </li>
           <li>
             <a
-              href="#"
-              className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center justify-center hover:bg-gray-900 hover:text-white no-underline"
+              href="/reports"
+              className="lg:inline-flex lg:w-auto w-full flex px-3 py-2 rounded text-white text-xl items-center justify-center hover:bg-white hover:text-primary-40  no-underline"
             >
-              <span>Contact Us</span>
+              <span className="">Reports</span>
             </a>
+          </li>
+          <li className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white hover:text-primary-40 text-xl items-center justify-center hover:bg-white  no-underline">
+            {session ? (
+              <a
+                href="/settings"
+                className="flex gap-2 justify-center items-center  no-underline"
+              >
+                <AiOutlineUser />
+                Settings
+              </a>
+            ) : null}
           </li>
         </ul>
       </div>

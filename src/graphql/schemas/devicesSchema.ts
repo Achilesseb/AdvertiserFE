@@ -100,3 +100,9 @@ export const EDIT_DEVICE = gql`
     }
   }
 `;
+
+export const DELETE_DEVICE = gql`
+  mutation DeleteDevice($devicesIds: [String!]!) {
+    deleteDevice(devicesIds: $devicesIds)
+  }
+`;

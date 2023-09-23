@@ -3,35 +3,10 @@ import { createColumnHelper } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
-export type UserModel = {
-  id: string;
-  address: string;
-  registrationPlate: string;
-  city: string;
-  name: string;
-  phone: string;
-  team: string;
-  email: string;
-  carDetails: string;
-  tabletId: string;
-  tablets: number;
-  role: string;
-  createdAt: string;
-};
-
-export type DeviceModel = {
-  identifier: string;
-  createdAt: string;
-  system: string;
-  location: string;
-  inUse: boolean;
-  driver: UserModel;
-  identificator: string;
-};
 
 const columnHelper = createColumnHelper<DeviceModel>();
 
-const defaultColumns = [
+const defaultDevicesColumns = [
   columnHelper.accessor("identifier", {
     header: "Device",
     cell: (info) => info.getValue(),
@@ -52,9 +27,13 @@ const defaultColumns = [
     header: "In Use",
     cell: (info) =>
       info.getValue() ? (
-        <AiOutlineCheck color="#008000" />
+        <div className="flex justify-center">
+          <AiOutlineCheck color="#008000" />
+        </div>
       ) : (
-        <AiOutlineClose color="#FF0000" />
+        <div className="flex justify-center">
+          <AiOutlineClose color="#FF0000" />
+        </div>
       ),
     footer: (info) => info.column.id,
   }),
@@ -96,4 +75,30 @@ export const generateDeviceTableHeaderElements = (
     styleModifiers: "col-start-9 col-end-11",
   },
 });
-export default defaultColumns;
+export default defaultDevicesColumns;
+
+export type UserModel = {
+  id: string;
+  address: string;
+  registrationPlate: string;
+  city: string;
+  name: string;
+  phone: string;
+  team: string;
+  email: string;
+  carDetails: string;
+  tabletId: string;
+  tablets: number;
+  role: string;
+  createdAt: string;
+};
+
+export type DeviceModel = {
+  identifier: string;
+  createdAt: string;
+  system: string;
+  location: string;
+  inUse: boolean;
+  driver: UserModel;
+  identificator: string;
+};

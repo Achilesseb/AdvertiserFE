@@ -8,13 +8,20 @@ const getHeaderElement = ({ type, ...rest }: TableHeaderElement) => {
   switch (type) {
     case "button":
       const buttonProps = rest as HeaderButtonProps;
+      const onClickHandler = async () => {
+        if (buttonProps?.refetch && buttonProps.onClick) {
+          await buttonProps?.onClick();
+          await buttonProps?.refetch();
+        } else if (!buttonProps?.refetch && buttonProps.onClick)
+          buttonProps?.onClick();
+      };
       element = (
         <ADVButton
           key={buttonProps.buttonText}
           buttonText={buttonProps.buttonText}
           styleType={buttonProps.style}
           modifier={buttonProps?.styleModifiers}
-          onButtonClick={buttonProps?.onClick}
+          onButtonClick={onClickHandler}
         />
       );
       break;
@@ -42,6 +49,7 @@ type HeaderButtonProps = {
   buttonText: string;
   styleModifiers?: string;
   onClick?: () => void;
+  refetch?: () => void;
 };
 
 type HeaderInputProps = {

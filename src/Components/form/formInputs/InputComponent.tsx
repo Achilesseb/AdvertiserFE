@@ -5,7 +5,7 @@ type InputProps = {
   id?: string;
   name: string;
   label?: string | null;
-  type?: "text" | "email" | "password" | "date";
+  type?: "text" | "email" | "password" | "date" | "file";
   className?: string;
   placeholder?: string;
   error?: string;
@@ -16,7 +16,7 @@ type InputProps = {
   min?: string | number;
   max?: string | number;
   disabled?: boolean;
-  value?: string;
+  value?: string | number;
   labelRequired?: boolean;
   labelRequiredClassName?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

@@ -2,9 +2,11 @@ import DefaultButtonComponent from "@/Components/DefaultButton";
 
 export const FormBasicButtons = ({
   handleCancelButton,
+  handleSaveButton,
   isDirty,
 }: {
   handleCancelButton: () => void;
+  handleSaveButton?: () => void;
   isDirty: boolean;
 }) => {
   return (
@@ -18,7 +20,8 @@ export const FormBasicButtons = ({
       />
       <DefaultButtonComponent
         buttonText={"Save"}
-        buttonType="submit"
+        buttonType={handleSaveButton ? "button" : "submit"}
+        onButtonClick={handleSaveButton}
         styleType="filled"
         modifier="w-1/2"
       />

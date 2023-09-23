@@ -1,8 +1,11 @@
 "use client";
-import { GET_ALL_DEVICES } from "@/graphql/schemas/devicesSchema";
+import {
+  DELETE_DEVICE,
+  GET_ALL_DEVICES,
+} from "@/graphql/schemas/devicesSchema";
 import { ColumnDefBase } from "@tanstack/react-table";
 import { TableComponent } from "../Table/Table";
-import defaultColumns, {
+import {
   DeviceModel,
   generateDeviceTableHeaderElements,
 } from "./devicesAnnexes/devicesPageTemplate";
@@ -10,13 +13,15 @@ import { useEffect, useState } from "react";
 import { Snackbar } from "../SnackBar";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { TableHeader } from "../Table/TableHeader";
+import defaultDevicesColumns from "./devicesAnnexes/devicesPageTemplate";
+import { useMutation } from "@apollo/client";
 
 export const AllDevicesPage = ({
   searchParams,
 }: {
   searchParams: Record<string, string | boolean>;
 }) => {
+  const [toDeleteDataIds, setToDeleteDataIds] = useState<Array<string>>([]);
   const [cityFilter, setCityFilter] = useState<string>("");
   const router = useRouter();
 
@@ -33,6 +38,11 @@ export const AllDevicesPage = ({
       );
     }
   }, [searchParams, router]);
+  const [deleteEntities] = useMutation(DELETE_DEVICE, {
+    variables: {
+      devicesIds: toDeleteDataIds,
+    },
+  });
 
   const deviceTableHeaderElements = generateDeviceTableHeaderElements(router);
 
@@ -42,20 +52,26 @@ export const AllDevicesPage = ({
       onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
         setCityFilter(event.target.value as string),
     },
-    addNew: deviceTableHeaderElements.addNew,
-    delete: deviceTableHeaderElements.delete,
+
+    delete: {
+      ...deviceTableHeaderElements.delete,
+      onClick: deleteEntities,
+    },
   };
 
   return (
     <div className="h-full px-20 py-4 flex flex-col gap-4">
-      <h3 className="text-2xl">Devices data</h3>
-      <TableHeader elements={polishedDeviceTableHeaderElements} />
       <TableComponent<DeviceModel>
         routerPath="/devices"
+        headerData="Devices data"
         apolloQuery={GET_ALL_DEVICES}
+        setToDeleteDataIds={setToDeleteDataIds}
         columns={
-          defaultColumns as unknown as Array<ColumnDefBase<DeviceModel, string>>
+          defaultDevicesColumns as unknown as Array<
+            ColumnDefBase<DeviceModel, string>
+          >
         }
+        polishedHeaderElements={polishedDeviceTableHeaderElements}
         {...(cityFilter && {
           filters: { location: cityFilter },
         })}

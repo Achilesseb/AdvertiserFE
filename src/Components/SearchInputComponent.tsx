@@ -33,6 +33,8 @@ export const SearchInputComponent = <
   formFieldIdentifier,
   displayKey,
   filterFieldIdentifier,
+  reset,
+  setReset,
   ...props
 }: SearchInputPropTypes<DataType, FormTypes>) => {
   const [inputDisplayValue, setInputDisplayValue] = useState<string>(
@@ -65,6 +67,7 @@ export const SearchInputComponent = <
   }, [externalData, entityIdentifier, formFieldIdentifier, setValue]);
 
   const { refetch: refetchEntities } = useQuery(queryExpression, {
+    fetchPolicy: "network-only",
     variables: {
       input: { filters: { [filterFieldIdentifier]: inputDisplayValue } },
     },
@@ -94,6 +97,44 @@ export const SearchInputComponent = <
     }
   }, [entityIdentifier, refetchEntities]);
 
+  useEffect(() => {
+    if (reset) {
+      setFilteredEntities([]);
+      setInputDisplayValue("");
+    }
+
+    setReset?.(false);
+  }, [reset, setFilteredEntities, setReset, refetchEntities]);
+
+  if (!props.control || !formTemplate) {
+    return (
+      <div className="w-full h-full  flex flex-col gap-1 mt-2">
+        {props.label ? (
+          <label className={`mr-auto ${props.labelClassName}`}>
+            {props.label as string}
+            {props.labelRequired ? (
+              <span className="text-error-60"> *</span>
+            ) : null}
+          </label>
+        ) : null}
+
+        <DropDownComponent<DataType, FormTypes>
+          displayKey={displayKey}
+          debouncer={500}
+          data={filteredEntities}
+          displayValue={inputDisplayValue}
+          onChangeInputValue={setInputDisplayValue}
+          onSelectValue={(value: ValueReturnType) => {
+            setSelectedEntityId?.(value?.id);
+            setInputDisplayValue(value?.data?.[entityIdentifier] as string);
+          }}
+          className={`w-full ${props.containerClassName}`}
+          formTrigger={formTrigger}
+          {...props}
+        />
+      </div>
+    );
+  }
   return (
     <Controller
       key={props.fieldName as string}
@@ -152,9 +193,10 @@ export type SearchInputPropTypes<DataType, FormTypes extends FieldValues> = {
   setSelectedEntityId?: Dispatch<SetStateAction<string | null>>;
   formTrigger?: UseFormTrigger<FormTypes>;
   errors?: FieldErrors<FormTypes>;
-  formTemplate: FormTemplateDefinition<FormTypes>;
+  formTemplate?: FormTemplateDefinition<FormTypes>;
   setValue?: UseFormSetValue<FormTypes>;
   getValues?: UseFormGetValues<FormTypes>;
-
+  reset?: boolean;
+  setReset?: Dispatch<SetStateAction<boolean>>;
   [key: string]: unknown;
 };

@@ -16,7 +16,7 @@ export const parseStyles = (stylesString: string) => {
 };
 
 export const mergeStyles = (currentStyles: string, newStyles: string) => {
-  const outputStyles = new Set();
+  const outputStyles = new Set<string>();
   const newStylesObject = parseStyles(newStyles);
 
   const mergedStyles = { ...parseStyles(currentStyles) };
@@ -37,5 +37,5 @@ export const mergeStyles = (currentStyles: string, newStyles: string) => {
     }
   }
 
-  return [outputStyles].join(" ");
+  return [...outputStyles].join(" ");
 };

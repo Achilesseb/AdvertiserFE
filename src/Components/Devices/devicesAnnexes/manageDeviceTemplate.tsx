@@ -63,6 +63,7 @@ export const deviceNewFormTemplate: FormTemplateDefinition<DevicesFormData> = {
     fieldName: "system",
     label: "Device system",
     type: "input",
+
     labelRequiredClassName: "text-neutral-60",
     i18nIdentifier: "service-details",
     constraints: {

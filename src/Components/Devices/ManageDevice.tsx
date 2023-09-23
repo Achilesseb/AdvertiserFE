@@ -61,8 +61,11 @@ export const ManageDevice = ({
         ),
       }),
     },
-    identifier: deviceNewFormTemplate.identifier,
-    system: deviceNewFormTemplate.system,
+    identifier: {
+      disabled: isEditForm,
+      ...deviceNewFormTemplate.identifier,
+    },
+    system: { disabled: isEditForm, ...deviceNewFormTemplate.system },
     location: deviceNewFormTemplate.location,
     inUse: deviceNewFormTemplate.inUse,
   };

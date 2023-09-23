@@ -38,6 +38,7 @@ export type FormTemplateDefinitionInputType<U extends FieldValues> = {
     [key: string]: string | unknown;
   }) => JSX.Element;
   type: "checkbox" | "input" | "date" | "react-element" | "group" | "textarea";
+  inputType?: "text" | "file";
   customFieldName?: string;
   queryCustomFieldName?: string;
   constraints?: Constraints;

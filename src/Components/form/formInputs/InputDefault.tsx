@@ -14,6 +14,7 @@ export const FormDefaultInput = <U extends FieldValues>({
     <InputComponent
       {...field}
       label={input.label}
+      type={input?.inputType ?? "text"}
       labelRequired={input?.labelRequired}
       labelRequiredClassName={input.labelRequiredClassName ?? "text-error-60"}
       containerClassName={`${input?.containerClassName ?? ""} ${

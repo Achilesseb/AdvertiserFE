@@ -69,7 +69,7 @@ export type FormMainPropTypes<U extends FieldValues = {}> = {
      Custom variables for MUTATING DATA. EX. "role" on AddNewWorker.
       This will get added to the mutation automatically.
      */
-  defaultMutationVariables?: Record<string, string | boolean>;
+  defaultMutationVariables?: Record<string, string | boolean> | null;
   /***
      Validation schema for FORM input validation. 
      */
@@ -117,13 +117,15 @@ export type FormMainPropTypes<U extends FieldValues = {}> = {
      Overwrite function to generate form buttons with custom behavior. 
      If no value is provided it will generate the default form Buttons: "Cancel" and "Save".
      */
-  generateCustomFormButtons?: (
-    isDirty?: boolean,
-    reset?: UseFormReset<U>,
-    trigger?: UseFormTrigger<U>,
-    getValues?: UseFormGetValues<U>,
-    editEntityTemplateMutation?: MutationFunction
-  ) => JSX.Element | null;
+  generateCustomFormButtons?:
+    | ((
+        isDirty?: boolean,
+        reset?: UseFormReset<U>,
+        trigger?: UseFormTrigger<U>,
+        getValues?: UseFormGetValues<U>,
+        editEntityTemplateMutation?: MutationFunction
+      ) => JSX.Element | null)
+    | null;
   /***
      Overwrite function to generate the Section of the Form. Can return an actual Section Title or null.
      Null will practically remove the sectionTitle from Form.
@@ -196,7 +198,11 @@ export type FormMainPropTypes<U extends FieldValues = {}> = {
      Custom submit handler that will oberwrite the default submit.
     
      */
-  customFormSubmit?: (data: unknown, reset?: UseFormReset<U>) => void;
+  customFormSubmit?: (
+    data: U,
+    reset: UseFormReset<U>,
+    handlerFunction: MutationFunction
+  ) => void;
   /***
      Disable dirty behaviour. Default: false. This will provide more control on the form itself as for disableing the dirty behaviour will allow u to customize the "onSave" "onCancel" behaviour in more detail.
      */

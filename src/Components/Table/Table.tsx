@@ -11,21 +11,30 @@ import {
   getCoreRowModel,
   useReactTable,
   ColumnDefBase,
+  Row,
 } from "@tanstack/react-table";
 import PaginationComponent from "../PaginationComponent";
 import { usePaginationHook } from "@/customHooks/paginationHook";
 import { useQuery } from "@apollo/client";
-import { HTMLProps, useState } from "react";
+import {
+  Dispatch,
+  HTMLProps,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useRouter } from "next/navigation";
+import { TableHeader, TableHeaderElement } from "./TableHeader";
+import { useRef } from "react";
 
 const IndeterminateCheckbox = ({
   indeterminate,
   className = "",
   ...rest
 }: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) => {
-  const ref = React.useRef<HTMLInputElement>(null!);
+  const ref = useRef<HTMLInputElement>(null!);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof indeterminate === "boolean") {
       ref.current.indeterminate = !rest.checked && indeterminate;
     }
@@ -42,23 +51,57 @@ const IndeterminateCheckbox = ({
 };
 
 export const TableComponent = <DataType extends {}>({
+  externalData,
   apolloQuery,
   columns,
   filters,
   routerPath,
+  polishedHeaderElements,
+  headerData,
+  tableHeader = true,
+  setToDeleteDataIds,
+  rowsClickable = true,
+  externalPagination,
+  externalTotalPages,
+  rowClickFunction,
+  fetchPolicy,
 }: {
+  externalData?: DataType[];
+  externalPagination?: {
+    pageNumber: number;
+    setPageNumber: (pageNumber: number) => void;
+    resultsPerPage: number;
+    setResultsPerPage: (resultsPerPage: number) => void;
+  };
+  externalCount?: number;
   apolloQuery: DocumentNode;
   columns: Array<ColumnDefBase<DataType, string>>;
+  routerPath?: string;
+  polishedHeaderElements: Record<string, TableHeaderElement>;
   filters?: Record<string, unknown>;
-  routerPath: string;
+  headerData?: string;
+  setToDeleteDataIds?: Dispatch<SetStateAction<Array<string>>>;
+  tableHeader?: boolean;
+  rowsClickable?: boolean;
+  externalTotalPages?: number;
+  rowClickFunction?: (row: Row<DataType>) => void;
+  fetchPolicy?: string;
 }) => {
   const [dataToRender, setDataToRender] = useState<Array<DataType>>([]);
+  const [totalCount, setTotalCount] = useState<number | null>();
   const [totalPages, setTotalPages] = useState<number>(0);
   const { resultsPerPage, pageNumber, setPageNumber } = usePaginationHook();
+  const {
+    pageNumber: pageNumberExternal,
+    setPageNumber: setPageNumberExternal,
+  } = externalPagination ?? {};
+  const [selectedRows, setSelectedRows] = useState({});
 
   const router = useRouter();
 
-  useQuery(apolloQuery, {
+  const { refetch, loading } = useQuery(apolloQuery, {
+    ...(fetchPolicy && { fetchPolicy: fetchPolicy }),
+    skip: !!externalData,
     fetchPolicy: "cache-and-network",
     variables: {
       input: {
@@ -75,16 +118,23 @@ export const TableComponent = <DataType extends {}>({
       const queryKey = Object.keys(data)[0];
       const stateData = data[queryKey];
       setDataToRender(stateData.data);
+      setTotalCount(stateData.count);
       setTotalPages(Math.ceil(stateData.count / resultsPerPage));
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const finalColumns = [
     {
       id: "id",
       header: "Nr.",
       cell: ({ row }: { row: RowProps }) =>
-        (pageNumber - 1) * resultsPerPage + parseInt(row?.id ?? "0") + 1,
+        ((pageNumberExternal ?? pageNumber) - 1) * resultsPerPage +
+        parseInt(row?.id ?? "0") +
+        1,
       footer: ({ column }: { column: RowProps }) => column.id,
     },
     ...columns,
@@ -114,16 +164,63 @@ export const TableComponent = <DataType extends {}>({
     },
   ];
 
+  useEffect(() => {
+    if (!dataToRender) return;
+    const selectedIDs = Object.keys(selectedRows).map(Number);
+    const toDeleteData: Array<string> = (externalData ?? dataToRender)
+      ?.filter((_data, index) => selectedIDs.includes(index))
+      ?.map((data) => data?.["id" as keyof DataType] as string);
+
+    setToDeleteDataIds?.([...toDeleteData]);
+  }, [selectedRows, dataToRender, setToDeleteDataIds, externalData]);
+
   const table = useReactTable<DataType>({
-    data: dataToRender,
+    enableRowSelection: true,
+    data: externalData ?? dataToRender,
     columns: finalColumns as unknown as Array<ColumnDef<DataType, string>>,
     getCoreRowModel: getCoreRowModel(),
+    onRowSelectionChange: setSelectedRows,
+    state: {
+      rowSelection: selectedRows,
+    },
   });
 
-  if (!table) return;
+  const morePolishedHeaderElements = {
+    ...(polishedHeaderElements?.searchInput && {
+      searchInput: polishedHeaderElements.searchInput,
+    }),
+    ...(polishedHeaderElements?.addNew && {
+      addNew: polishedHeaderElements?.addNew,
+    }),
+    delete: {
+      ...polishedHeaderElements.delete,
+      refetch: async () => {
+        await refetch();
+        setToDeleteDataIds?.([]);
+        setSelectedRows({});
+      },
+    },
+  };
+  console.log(
+    dataToRender,
+    "Data to render",
 
+    externalData,
+    "external Data",
+    loading,
+    "Loading",
+    table,
+    "table"
+  );
+  if (!table) return;
   return (
-    <div className="p-2">
+    <div className="p-2 flex flex-col gap-2">
+      {tableHeader ? (
+        <h3 className="text-2xl">{`${headerData} ${
+          totalCount ? `(${totalCount})` : ""
+        }`}</h3>
+      ) : null}
+      <TableHeader elements={morePolishedHeaderElements} />
       <BTable
         striped
         bordered
@@ -132,11 +229,11 @@ export const TableComponent = <DataType extends {}>({
         size="sm"
         className="font-[Inter-500] text-lg "
       >
-        <thead className="p-4">
+        <thead className="p-2">
           {table?.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className=" text-center">
+                <th key={header.id} className=" text-center items-center">
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -152,16 +249,19 @@ export const TableComponent = <DataType extends {}>({
           {table.getRowModel().rows.map((row) => (
             <tr
               key={row.id}
-              onClick={() =>
-                router.push(
-                  `${routerPath}/${
-                    (row.original as Record<string, unknown>).id
-                  }`
-                )
-              }
+              {...(rowsClickable && {
+                onClick: rowClickFunction
+                  ? () => rowClickFunction(row)
+                  : () =>
+                      router.push(
+                        `${routerPath}/${
+                          (row.original as Record<string, unknown>).id
+                        }`
+                      ),
+              })}
             >
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className=" text-center">
+                <td key={cell.id} className=" text-center align-middle ">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -171,9 +271,9 @@ export const TableComponent = <DataType extends {}>({
       </BTable>
       <div className="h-4" />
       <PaginationComponent
-        totalPages={totalPages}
-        currentPage={pageNumber}
-        changePage={setPageNumber}
+        totalPages={externalTotalPages ?? totalPages}
+        currentPage={pageNumberExternal ?? pageNumber}
+        changePage={setPageNumberExternal ?? setPageNumber}
       />
     </div>
   );

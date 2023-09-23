@@ -15,9 +15,7 @@ export const EWFormTitle = ({
 
   return (
     <div className={`${props.formTitleStyles} `}>
-      <h1 className="text-titleLarge font-bold  ">
-        {props?.formTitle as string}
-      </h1>
+      <span className=" font-bold  ">{props?.formTitle as string}</span>
       {generateSectionButtons()}
     </div>
   );

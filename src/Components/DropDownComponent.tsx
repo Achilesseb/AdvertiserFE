@@ -28,6 +28,7 @@ type DropDownPropTypes<T extends {}, FormTypes extends FieldValues> = {
   disabled?: boolean;
   displayValue?: string;
   displayKey?: string;
+  placeholder?: string;
 };
 
 export type ValueReturnType = {
@@ -51,14 +52,16 @@ export const DropDownComponent = <
   const [selectedResults, setSelectedResults] = useState<
     ValueReturnType | "Invalid value"
   >({ id: "", data: null });
-
   const [query, setQuery] = useState("");
 
-  const handleQuery = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setQuery(e.target.value);
-    onChangeInputValue?.(e.target.value);
-  }, []);
+  const handleQuery = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      setQuery(e.target.value);
+      onChangeInputValue?.(e.target.value);
+    },
+    [onChangeInputValue]
+  );
 
   const debounceResults = useMemo(() => {
     return debounce(handleQuery, debouncer ? debouncer : 0);
@@ -139,8 +142,9 @@ export const DropDownComponent = <
       >
         <div className="relative">
           <Combobox.Input
-            name="serviceTitle"
+            name="searchInput"
             onChange={(event) => debounceResults(event)}
+            placeholder={props?.placeholder as string}
             displayValue={(result: ValueReturnType) =>
               displayValue ??
               props?.getValues?.(
