@@ -1,9 +1,7 @@
+"use Client";
 import { useState } from "react";
-
-import Datepicker, {
-  DateRangeType,
-  DateValueType,
-} from "react-tailwindcss-datepicker";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import {
   defaultClientReportsColumns,
   generateClientsReportsTableHeaderElements,
@@ -14,20 +12,39 @@ import { GET_CLIENTS_REPORTS } from "@/graphql/schemas/reportsSchema";
 import { ColumnDefBase } from "@tanstack/react-table";
 import { ClientModel } from "../Clients/clientsAnnexes/clientsPageTemplate";
 import { TableComponent } from "../Table/Table";
+import { DateRangePicker, RangeKeyDict } from "react-date-range";
+
+export type DateSelection = {
+  startDate: Date;
+  endDate: Date;
+  key: string;
+};
 
 export const AllClientsReportsPage = () => {
-  const [value, setValue] = useState<DateRangeType>({
+  const [selectedDateRange, setSelectedDateRange] = useState<DateSelection>({
     startDate: new Date(),
-    endDate: new Date().setMonth(11) as unknown as Date,
+    endDate: new Date(),
+    key: "selection",
   });
-  const handleValueChange = (newValue: DateValueType) =>
-    setValue(newValue as DateRangeType);
+  const [showDatePicker, setShowDatePicker] = useState(true);
 
+  const handleSelect = (ranges: RangeKeyDict) => {
+    setSelectedDateRange(ranges.selection as unknown as DateSelection);
+  };
+  const onClickClear = () => {
+    setSelectedDateRange({
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    });
+  };
   const [nameFilter, setNameFilter] = useState<string>("");
   const defaultPromotionFilters = {
     ...(nameFilter && { name: nameFilter }),
-    ...(value.startDate && { startDate: value.startDate }),
-    ...(value.endDate && { endDate: value.endDate }),
+    ...(selectedDateRange?.startDate && {
+      startDate: selectedDateRange.startDate,
+    }),
+    ...(selectedDateRange?.endDate && { endDate: selectedDateRange.endDate }),
   };
 
   const clientsTableHeaderElements = generateClientsReportsTableHeaderElements;
@@ -42,14 +59,30 @@ export const AllClientsReportsPage = () => {
 
   return (
     <div className="">
-      <Datepicker
-        value={value}
-        onChange={handleValueChange}
-        displayFormat={"MM/DD/YYYY"}
-        containerClassName="relative mt-4 border-2 border-primary-40 w-6/12 rounded-md mb-4"
-        popoverDirection="down"
-        showShortcuts
-      />
+      {showDatePicker ? (
+        <>
+          <DateRangePicker
+            ranges={[selectedDateRange]}
+            onChange={handleSelect}
+            moveRangeOnFirstSelection={false}
+            direction="horizontal"
+            months={2}
+          />
+          <button
+            className=" text-success-50 px-4 border-2 border-neutral-40 p-2 rounded-xl"
+            onClick={onClickClear}
+          >
+            Clear
+          </button>
+        </>
+      ) : null}
+
+      <button
+        className="text-danger px-4 border-2 border-neutral-40 p-2 rounded-xl ml-2"
+        onClick={() => setShowDatePicker(!showDatePicker)}
+      >
+        {showDatePicker ? "Hide" : "Pick dates"}
+      </button>
 
       <TableComponent<ClientModel>
         polishedHeaderElements={polishedClientsReportsTableHeaderElements}

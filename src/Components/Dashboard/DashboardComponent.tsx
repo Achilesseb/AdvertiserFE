@@ -1,3 +1,4 @@
+"use Client";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
@@ -14,11 +15,9 @@ import {
 import toast from "react-hot-toast";
 import { Snackbar } from "../SnackBar";
 import { LatLngExpression } from "leaflet";
-import Datepicker, {
-  DateRangeType,
-  DateValueType,
-} from "react-tailwindcss-datepicker";
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 dayjs.extend(utc);
 
@@ -32,12 +31,7 @@ export type DeviceActivityReturnType = {
 };
 
 export const DashboardComponent = () => {
-  const [value, setValue] = useState<DateRangeType>({
-    startDate: new Date(),
-    endDate: new Date().setMonth(11) as unknown as Date,
-  });
-  const handleValueChange = (newValue: DateValueType) =>
-    setValue(newValue as DateRangeType);
+  const [startDate, setStartDate] = useState(new Date());
   const defaultPosition: LatLngExpression = [
     DEFAULT_CITY_LATITUDE,
     DEFAULT_CITY_LONGITUDE,
@@ -48,7 +42,7 @@ export const DashboardComponent = () => {
     variables: {
       input: {
         filters: {
-          date: value.startDate,
+          ...(startDate && { date: startDate }),
         },
       },
     },
@@ -56,19 +50,16 @@ export const DashboardComponent = () => {
   if (error) {
     toast.custom(<Snackbar type="error" message={"Something went wrong"} />);
   }
+
   return (
-    <div className="desktop:h-[90vh] laptop:h-[87vh] overflow-hidden p-4">
+    <div className="desktop:h-[95vh] laptop:h-[87vh] overflow-hidden">
       <div className="relative w-full h-full">
-        <Datepicker
-          value={value}
-          configs={{}}
-          primaryColor={"green"}
-          onChange={handleValueChange}
-          displayFormat={"MM/DD/YYYY"}
-          containerClassName="absolute mt-0 top-0 right-0 border-2 border-primary-40 w-2/12 rounded-md mb-0 z-50"
-          popoverDirection="down"
-          asSingle
-          useRange={false}
+        <DatePicker
+          showIcon
+          selected={startDate}
+          onChange={(date) => setStartDate(date as Date)}
+          className="border-2 border-primary-40 absolute left-12 top-5 z-50 self-end "
+          calendarClassName="top-10 left-14"
         />
         <MapContainer
           className="desktop:h-[100%] laptop:h-[100%] "
