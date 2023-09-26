@@ -23,6 +23,7 @@ export const GET_CLIENTS_PROMOTIONS_REPORTS = gql`
         clientId
         title
         trips
+        name
       }
       count
     }

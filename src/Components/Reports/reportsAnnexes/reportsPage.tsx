@@ -14,6 +14,7 @@ export type PromotionsReportsModel = {
   clientId: string;
   title: number;
   trips: number;
+  name: string;
 };
 
 const clientsReportsColumnHelper = createColumnHelper<ClientReportsModel>();
@@ -46,6 +47,11 @@ const clientsPromotionsReportsColumnHelper =
   createColumnHelper<PromotionsReportsModel>();
 
 export const defaultClientPromotionsReportsColumns = [
+  clientsPromotionsReportsColumnHelper.accessor("name", {
+    header: "Client Name",
+    cell: (info) => info.getValue(),
+    footer: (info) => info.column.id,
+  }),
   clientsPromotionsReportsColumnHelper.accessor("title", {
     header: "Promotion title",
     cell: (info) => info.getValue(),

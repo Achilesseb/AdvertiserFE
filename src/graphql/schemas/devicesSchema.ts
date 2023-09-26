@@ -106,3 +106,19 @@ export const DELETE_DEVICE = gql`
     deleteDevice(devicesIds: $devicesIds)
   }
 `;
+
+export const GET_DEVICE_ACTIVITY = gql`
+  query Query($input: GetDeviceLiveActivity) {
+    getDevicesLivePosition(input: $input) {
+      data {
+        deviceId
+        lastTimeCreated
+        longitude
+        latitude
+        name
+        teamName
+      }
+      count
+    }
+  }
+`;

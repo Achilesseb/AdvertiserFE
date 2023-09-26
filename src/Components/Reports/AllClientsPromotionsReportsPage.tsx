@@ -10,7 +10,7 @@ import {
 } from "./reportsAnnexes/reportsPage";
 
 import { TableHeaderElement } from "../Table/TableHeader";
-import { GET_CLIENTS_PROMOTIONS_REPORTS } from "@/graphql/reportsSchema";
+import { GET_CLIENTS_PROMOTIONS_REPORTS } from "@/graphql/schemas/reportsSchema";
 import { ColumnDefBase } from "@tanstack/react-table";
 import { ClientModel } from "../Clients/clientsAnnexes/clientsPageTemplate";
 import { TableComponent } from "../Table/Table";
