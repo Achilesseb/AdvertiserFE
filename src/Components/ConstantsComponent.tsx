@@ -162,7 +162,6 @@ export const AllConstantsPage = () => {
       "flex justify-between desktop:w-8/12 laptop:w-12/12 mb-2 mt-2 ",
     formButtonContainerStyles: "mb-4  bottom-0 w-full flex",
   };
-  console.log(clickableEntityId);
   return (
     <div className="h-full px-10 py-4 flex flex-col gap-4 w-full">
       {showEmbededForm || clickableEntityId ? (

@@ -32,7 +32,6 @@ export const uploadVideoToS3 = async (objectKey: string, file: File) => {
 };
 
 export const getVideoUrlAws = async (objectKey: string) => {
-  console.log(objectKey);
   const command = new GetObjectCommand({
     Bucket: bucketName,
     Key: objectKey,
@@ -48,7 +47,7 @@ export const deleteVideoFromS3 = async (objectKey: string) => {
     Key: objectKey,
   });
   try {
-    const response = await s3.send(command);
+    await s3.send(command);
   } catch (err) {
     console.error(err);
   }

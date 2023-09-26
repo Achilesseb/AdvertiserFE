@@ -27,7 +27,6 @@ export const AllTeamsPage = ({
   const defaultPromotionFilters = {
     teamName: titleFilter,
   };
-  console.log(searchParams);
   const [deleteEntities] = useMutation(DELETE_TEAMS, {
     variables: {
       teamIds: toDeleteDataIds,

@@ -25,7 +25,6 @@ export const ManageDriver = ({
   isEditForm = false,
 }: ManageDriverProps) => {
   const router = useRouter();
-  console.log(searchParams);
   const [userData, setUserData] = useState<UserModelWithDevicesAndTeams>();
 
   const [selectedTeamId, setSelectedTeamId] = useState<string | null>(null);

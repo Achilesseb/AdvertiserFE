@@ -86,6 +86,7 @@ export const TableComponent = <DataType extends {}>({
   externalTotalPages?: number;
   rowClickFunction?: (row: Row<DataType>) => void;
   fetchPolicy?: string;
+  customQueryParams?: Record<string, unknown>;
 }) => {
   const [dataToRender, setDataToRender] = useState<Array<DataType>>([]);
   const [totalCount, setTotalCount] = useState<number | null>();
@@ -238,6 +239,7 @@ export const TableComponent = <DataType extends {}>({
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr
+              className={`${!!rowsClickable}` && "cursor-pointer"}
               key={row.id}
               {...(rowsClickable && {
                 onClick: rowClickFunction
