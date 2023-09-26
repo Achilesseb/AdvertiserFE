@@ -15,7 +15,11 @@ import defaultTeamsColumn, {
   generateTeamsTableHeaderElements,
 } from "./teamsAnnexes/teamsPageTemplate";
 
-export const AllTeamsPage = (searchParams: TeamPageSearchParams) => {
+export const AllTeamsPage = ({
+  searchParams,
+}: {
+  searchParams: TeamPageSearchParams;
+}) => {
   const [toDeleteDataIds, setToDeleteDataIds] = useState<Array<string>>([]);
   const [titleFilter, setTitleFilter] = useState<string>("");
   const router = useRouter();
@@ -23,7 +27,7 @@ export const AllTeamsPage = (searchParams: TeamPageSearchParams) => {
   const defaultPromotionFilters = {
     teamName: titleFilter,
   };
-
+  console.log(searchParams);
   const [deleteEntities] = useMutation(DELETE_TEAMS, {
     variables: {
       teamIds: toDeleteDataIds,

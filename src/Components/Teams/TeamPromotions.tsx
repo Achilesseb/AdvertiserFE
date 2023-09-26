@@ -18,6 +18,7 @@ import DefaultButtonComponent from "../DefaultButton";
 import { SearchInputComponent } from "../SearchInputComponent";
 import {
   ADD_NEW_PROMOTION_TO_TEAM,
+  DELETE_PROMOTIONS_FROM_TEAMS,
   GET_ALL_PROMOTIONS,
 } from "@/graphql/schemas/promotionSchema";
 import ReactPlayer from "react-player";
@@ -43,9 +44,9 @@ export const TeamPromotions = ({
   const [totalPages, setTotalPages] = useState<number>();
   const driverTableHeaderElements =
     generateTeamPromotionsTableHeaderElements(router);
-  const [deleteDriversFromTeams] = useMutation(DELETE_USERS_FROM_TEAMS, {
+  const [deleteDriversFromTeams] = useMutation(DELETE_PROMOTIONS_FROM_TEAMS, {
     variables: {
-      usersIds: toDeleteDataIds,
+      promotionIds: toDeleteDataIds,
     },
   });
   const [addNewPromoToTeam] = useMutation(ADD_NEW_PROMOTION_TO_TEAM, {
@@ -73,7 +74,6 @@ export const TeamPromotions = ({
       },
     }
   );
-  console.log(externalData);
   const polishedDriverTableHeaderElements = {
     addNew: {
       ...driverTableHeaderElements.addNew,
@@ -85,7 +85,10 @@ export const TeamPromotions = ({
         const { data } = await deleteDriversFromTeams();
         const queryKey = Object.keys(data)[0];
         const deletedCount = data[queryKey]?.count;
-        if ((totalCount - deletedCount) % pagination.resultsPerPage === 0) {
+        if (
+          (totalCount - deletedCount) % pagination.resultsPerPage === 0 &&
+          pagination.pageNumber > 1
+        ) {
           pagination.setPageNumber(pagination.pageNumber - 1);
         }
       },

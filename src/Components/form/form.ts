@@ -245,4 +245,6 @@ export type FormMainPropTypes<U extends FieldValues = {}> = {
      Custom width for infoBox component
      */
   infoBoxCustomWidth?: string;
+
+  fetchPolicy?: "network-only" | "cache-and-network";
 };

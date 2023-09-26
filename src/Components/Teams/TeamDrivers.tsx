@@ -73,7 +73,10 @@ export const TeamDrivers = ({
         const { data } = await deleteDriversFromTeams();
         const queryKey = Object.keys(data)[0];
         const deletedCount = data[queryKey]?.count;
-        if ((totalCount - deletedCount) % pagination.resultsPerPage === 0) {
+        if (
+          (totalCount - deletedCount) % pagination.resultsPerPage === 0 &&
+          pagination.pageNumber > 1
+        ) {
           pagination.setPageNumber(pagination.pageNumber - 1);
         }
       },

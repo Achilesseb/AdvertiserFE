@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { AllTeamsPage } from "@/Components/Teams/AllTeamsPage";
-
 const TeamsPage = ({
   searchParams,
 }: {

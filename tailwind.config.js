@@ -1,12 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-
-    // Or if using `src` directory:
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    // Add paths specific to your Next.js app pages here
   ],
   theme: {
     screens: {
@@ -18,7 +15,7 @@ module.exports = {
       roboto: ["Roboto-medium"],
     },
     colors: {
-      white: "#FFFFFF",
+      white: "#fff",
       primary: {
         10: "#0B2337",
         20: "#143F66",

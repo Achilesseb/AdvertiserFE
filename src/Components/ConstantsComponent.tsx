@@ -135,21 +135,7 @@ export const AllConstantsPage = () => {
   const [toDeleteDataIds, setToDeleteDataIds] = useState<Array<string>>([]);
   const [showEmbededForm, setShowEmbededForm] = useState<boolean>(false);
   const [clickableEntityId, setClickableEntityId] = useState<string>();
-  const router = useRouter();
-  console.log(clickableEntityId);
-  //   useEffect(() => {
-  //     if (searchParams?.action === "true") {
-  //       router.replace("/devices");
-  //       toast.custom(
-  //         <Snackbar
-  //           type="success"
-  //           message={`Device ${
-  //             searchParams?.type === "add" ? "added" : "updated"
-  //           } succesfully`}
-  //         />
-  //       );
-  //     }
-  //   }, [searchParams, router]);
+
   const [deleteEntities] = useMutation(DELETE_CONSTANTS, {
     variables: {
       devicesIds: toDeleteDataIds,
@@ -186,6 +172,7 @@ export const AllConstantsPage = () => {
           mutationExpression={
             clickableEntityId ? EDIT_CONSTANT : ADD_NEW_CONSTANT
           }
+          fetchPolicy="network-only"
           validationSchema={ConstantsValidationSchema}
           formTemplate={constantsForm}
           handleCancelButton={() => {

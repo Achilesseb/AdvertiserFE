@@ -25,3 +25,7 @@
   font-family: "Roboto-medium";
   src: url("../fonts/Roboto-MediumItalic.ttf");
 }
+
+a {
+  color: #fff;
+}

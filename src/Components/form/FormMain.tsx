@@ -46,6 +46,7 @@ const Form = <DataType extends {}, U extends FieldValues>({
   showSnackBar,
   customGetterMappingFunc,
   customFormSubmit,
+  fetchPolicy,
 }: FormMainPropTypes<U>): React.ReactElement | null => {
   const router = useRouter();
 
@@ -64,6 +65,7 @@ const Form = <DataType extends {}, U extends FieldValues>({
     loading,
     error: getQueryError,
   } = useQuery<DataType>(queryExpression, {
+    fetchPolicy: fetchPolicy ?? "cache-and-network",
     skip: skipQuery,
     variables: {
       ...(entityID && entityVariable && { [entityVariable]: entityID }),

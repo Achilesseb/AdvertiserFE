@@ -2,6 +2,7 @@ import { supabase } from "@/supabase";
 import { AuthSession } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 import { AiOutlineUser } from "react-icons/ai";
+import "../styles/input.css";
 
 export const NavigationBar = () => {
   const [session, setSession] = useState<AuthSession | null>(null);
@@ -18,7 +19,7 @@ export const NavigationBar = () => {
   }, []);
 
   return (
-    <nav className="w-full grid grid-cols-6 items-center bg-primary-50 py-4 text-white px-10">
+    <nav className="w-full grid grid-cols-6 items-center bg-primary-50 text-primary-99 py-4 px-10">
       <a href="/" className="p-2 mr-4 inline-flex items-center no-underline">
         <svg
           viewBox="0 0 24 24"
@@ -34,14 +35,14 @@ export const NavigationBar = () => {
       </a>
 
       <div
-        className="top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto col-start-3 col-end-7 "
+        className="top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto col-start-3 col-end-7 text-primary-99"
         id="navigation"
       >
         <ul className=" lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto flex w-full h-full m-0 lg:items-center lg:h-auto justify-evenly ">
           <li>
             <a
               href="/"
-              className=" flex lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl hover:text-primary-40   items-center justify-center  hover:bg-white no-underline"
+              className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl hover:text-primary-40 text-primary-99    items-center justify-center  hover:bg-white no-underline"
             >
               <span className=" ">Dashboard</span>
             </a>
@@ -49,7 +50,7 @@ export const NavigationBar = () => {
           <li>
             <a
               href="/clients"
-              className="flex lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center hover:text-primary-40   justify-center hover:bg-white  no-underline"
+              className="flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded  text-xl items-center hover:text-primary-40 text-primary-99   justify-center hover:bg-white  no-underline"
             >
               <span className="">Clients</span>
             </a>
@@ -57,7 +58,7 @@ export const NavigationBar = () => {
           <li>
             <a
               href="/drivers"
-              className=" flex lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center justify-center hover:text-primary-40   hover:bg-white  no-underline"
+              className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl items-center justify-center hover:text-primary-40 text-primary-99   hover:bg-white  no-underline"
             >
               <span className="">Drivers</span>
             </a>
@@ -65,7 +66,7 @@ export const NavigationBar = () => {
           <li>
             <a
               href="/devices"
-              className=" flex lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center hover:text-primary-40   justify-center hover:bg-white  no-underline"
+              className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl items-center hover:text-primary-40 text-primary-99   justify-center hover:bg-white  no-underline"
             >
               <span className="">Devices</span>
             </a>
@@ -73,7 +74,7 @@ export const NavigationBar = () => {
           <li>
             <a
               href="/teams"
-              className=" flex  lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white text-xl items-center justify-center hover:bg-white hover:text-primary-40   no-underline"
+              className=" flex  lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl items-center justify-center text-primary-99 hover:bg-white hover:text-primary-40   no-underline"
             >
               <span className=" ">Teams</span>
             </a>
@@ -81,16 +82,16 @@ export const NavigationBar = () => {
           <li>
             <a
               href="/reports"
-              className="lg:inline-flex lg:w-auto w-full flex px-3 py-2 rounded text-white text-xl items-center justify-center hover:bg-white hover:text-primary-40  no-underline"
+              className="lg:inline-flex lg:w-auto w-full flex px-4 py-2 rounded  text-xl items-center justify-center text-primary-99 hover:bg-white hover:text-primary-40  no-underline"
             >
               <span className="">Reports</span>
             </a>
           </li>
-          <li className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white hover:text-primary-40 text-xl items-center justify-center hover:bg-white  no-underline">
+          <li>
             {session ? (
               <a
                 href="/settings"
-                className="flex gap-2 justify-center items-center  no-underline"
+                className="flex gap-2 w-full px-3 py-2 rounded  hover:text-primary-40 hover:text-opacity-100 text-xl items-center justify-center text-primary-99 hover:bg-white  no-underline"
               >
                 <AiOutlineUser />
                 Settings

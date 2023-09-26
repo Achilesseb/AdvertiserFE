@@ -99,7 +99,7 @@ export const TableComponent = <DataType extends {}>({
 
   const router = useRouter();
 
-  const { refetch, loading } = useQuery(apolloQuery, {
+  const { refetch } = useQuery(apolloQuery, {
     ...(fetchPolicy && { fetchPolicy: fetchPolicy }),
     skip: !!externalData,
     fetchPolicy: "cache-and-network",
@@ -201,17 +201,7 @@ export const TableComponent = <DataType extends {}>({
       },
     },
   };
-  console.log(
-    dataToRender,
-    "Data to render",
 
-    externalData,
-    "external Data",
-    loading,
-    "Loading",
-    table,
-    "table"
-  );
   if (!table) return;
   return (
     <div className="p-2 flex flex-col gap-2">

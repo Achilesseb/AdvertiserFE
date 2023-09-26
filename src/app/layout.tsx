@@ -1,6 +1,6 @@
 "use client";
 import { NavigationBar } from "@/Components/NavigationBar";
-import "./globals.css";
+import "../styles/input.css";
 
 import { ReactNode } from "react";
 import { ApolloProvider } from "@apollo/client";
