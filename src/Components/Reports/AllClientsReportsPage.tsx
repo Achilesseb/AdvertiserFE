@@ -69,7 +69,7 @@ export const AllClientsReportsPage = () => {
             months={2}
           />
           <button
-            className=" text-success-50 px-4 border-2 border-neutral-40 p-2 rounded-xl"
+            className=" text-success-50 px-4 border-2 ml-2 mt-2 border-neutral-40 p-2 rounded-xl"
             onClick={onClickClear}
           >
             Clear

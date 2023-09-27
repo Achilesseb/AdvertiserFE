@@ -52,7 +52,7 @@ export const DashboardComponent = () => {
   }
 
   return (
-    <div className="desktop:h-[95vh] laptop:h-[87vh] overflow-hidden">
+    <div className="desktop:h-[88vh] laptop:h-[85vh] overflow-hidden">
       <div className="relative w-full h-full">
         <DatePicker
           showIcon

@@ -48,7 +48,7 @@ export const ManageDriver = ({
   const driversTemplate: FormTemplateDefinition<UsersFormData> = {
     team: {
       fieldName: "team",
-      label: "Team",
+      label: "Team (type to search)",
       type: "react-element",
       excludeFromMutation: true,
       element: (formTrigger, errors, props) => (
@@ -59,6 +59,7 @@ export const ManageDriver = ({
           formTrigger={formTrigger}
           formTemplate={driversNewFormTemplate}
           errors={errors}
+          placeholder="Search after team name"
           entityIdentifier="name"
           formFieldIdentifier="teamId"
           filterFieldIdentifier="teamName"
@@ -69,9 +70,10 @@ export const ManageDriver = ({
     },
     device: {
       fieldName: "identifier",
-      label: "Device",
+      label: "Device (type to search)",
       type: "react-element",
       excludeFromMutation: true,
+      disabled: true,
       element: (formTrigger, errors, props) => (
         <SearchInputComponent<DeviceModel, UsersFormData>
           displayKey="identifier"
@@ -83,6 +85,7 @@ export const ManageDriver = ({
           setSelectedEntityId={setSelectedDeviceId}
           formTrigger={formTrigger}
           errors={errors}
+          placeholder="Search after device name"
           formTemplate={driversNewFormTemplate}
           {...props}
         />
