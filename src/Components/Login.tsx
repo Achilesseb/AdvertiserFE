@@ -53,7 +53,9 @@ export const SignInFormComponent = () => {
           inputClassName="w-full"
         />
         <span className="w-4/5 mt-10 text-natural-10 font-bold underline text-bodySmall hover:cursor-pointer text-primary-50">
-          <Link href="/forgotPassword">Forgot password?</Link>
+          <Link href="/forgotPassword" className="text-primary-50 no-underline">
+            Forgot password?
+          </Link>
         </span>
 
         <DefaultButtonComponent

@@ -7,3 +7,9 @@ export const FILLER_QUERY = gql`
     fillerQuery
   }
 `;
+
+export const RESET_PASSWORD = gql`
+  mutation ResetPassword($password: String) {
+    resetPassword(password: $password)
+  }
+`;

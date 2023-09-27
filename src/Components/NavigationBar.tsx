@@ -6,15 +6,10 @@ import "../styles/input.css";
 
 export const NavigationBar = () => {
   const [session, setSession] = useState<AuthSession | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
-    });
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setLoading(false);
     });
   }, []);
 
@@ -34,72 +29,74 @@ export const NavigationBar = () => {
         </span>
       </a>
 
-      <div
-        className="top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto col-start-3 col-end-7 text-primary-99"
-        id="navigation"
-      >
-        <ul className=" lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto flex w-full h-full m-0 lg:items-center lg:h-auto justify-evenly ">
-          <li>
-            <a
-              href="/"
-              className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl hover:text-primary-40 text-primary-99    items-center justify-center  hover:bg-white no-underline"
-            >
-              <span className=" ">Dashboard</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/clients"
-              className="flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded  text-xl items-center hover:text-primary-40 text-primary-99   justify-center hover:bg-white  no-underline"
-            >
-              <span className="">Clients</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/drivers"
-              className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl items-center justify-center hover:text-primary-40 text-primary-99   hover:bg-white  no-underline"
-            >
-              <span className="">Drivers</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/devices"
-              className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl items-center hover:text-primary-40 text-primary-99   justify-center hover:bg-white  no-underline"
-            >
-              <span className="">Devices</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/teams"
-              className=" flex  lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl items-center justify-center text-primary-99 hover:bg-white hover:text-primary-40   no-underline"
-            >
-              <span className=" ">Teams</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/reports"
-              className="lg:inline-flex lg:w-auto w-full flex px-4 py-2 rounded  text-xl items-center justify-center text-primary-99 hover:bg-white hover:text-primary-40  no-underline"
-            >
-              <span className="">Reports</span>
-            </a>
-          </li>
-          <li>
-            {session ? (
+      {session && session.user.user_metadata?.role === "admin" ? (
+        <div
+          className="top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto col-start-3 col-end-7 text-primary-99"
+          id="navigation"
+        >
+          <ul className=" lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto flex w-full h-full m-0 lg:items-center lg:h-auto justify-evenly ">
+            <li>
               <a
-                href="/settings"
-                className="flex gap-2 w-full px-3 py-2 rounded  hover:text-primary-40 hover:text-opacity-100 text-xl items-center justify-center text-primary-99 hover:bg-white  no-underline"
+                href="/"
+                className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl hover:text-primary-40 text-primary-99    items-center justify-center  hover:bg-white no-underline"
               >
-                <AiOutlineUser />
-                Settings
+                <span className=" ">Dashboard</span>
               </a>
-            ) : null}
-          </li>
-        </ul>
-      </div>
+            </li>
+            <li>
+              <a
+                href="/clients"
+                className="flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded  text-xl items-center hover:text-primary-40 text-primary-99   justify-center hover:bg-white  no-underline"
+              >
+                <span className="">Clients</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/drivers"
+                className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl items-center justify-center hover:text-primary-40 text-primary-99   hover:bg-white  no-underline"
+              >
+                <span className="">Drivers</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/devices"
+                className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl items-center hover:text-primary-40 text-primary-99   justify-center hover:bg-white  no-underline"
+              >
+                <span className="">Devices</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/teams"
+                className=" flex  lg:inline-flex lg:w-auto w-full px-4 py-2 rounded text-xl items-center justify-center text-primary-99 hover:bg-white hover:text-primary-40   no-underline"
+              >
+                <span className=" ">Teams</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/reports"
+                className="lg:inline-flex lg:w-auto w-full flex px-4 py-2 rounded  text-xl items-center justify-center text-primary-99 hover:bg-white hover:text-primary-40  no-underline"
+              >
+                <span className="">Reports</span>
+              </a>
+            </li>
+            <li>
+              {session ? (
+                <a
+                  href="/settings"
+                  className="flex gap-2 w-full px-3 py-2 rounded  hover:text-primary-40 hover:text-opacity-100 text-xl items-center justify-center text-primary-99 hover:bg-white  no-underline"
+                >
+                  <AiOutlineUser />
+                  Settings
+                </a>
+              ) : null}
+            </li>
+          </ul>
+        </div>
+      ) : null}
     </nav>
   );
 };

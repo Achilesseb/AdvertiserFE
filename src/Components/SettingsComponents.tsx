@@ -54,7 +54,6 @@ export const SettingsComponent = () => {
 
   const logout = async () => {
     try {
-      router.push("/");
       await supabase.auth.signOut();
     } catch (error) {
       if (error) {
@@ -62,6 +61,8 @@ export const SettingsComponent = () => {
           <Snackbar type="error" message={`Something went wrong!`} />
         );
       }
+    } finally {
+      router.push("/");
     }
   };
 
