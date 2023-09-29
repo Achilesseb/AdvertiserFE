@@ -1,8 +1,4 @@
 "use Client";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 
 import { useQuery } from "@apollo/client";
 import { GET_DEVICE_ACTIVITY } from "@/graphql/schemas/devicesSchema";
@@ -15,9 +11,10 @@ import {
 import toast from "react-hot-toast";
 import { Snackbar } from "../SnackBar";
 import { LatLngExpression } from "leaflet";
-import { useState } from "react";
+import { ComponentType, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import dynamic from "next/dynamic";
 
 dayjs.extend(utc);
 
@@ -36,7 +33,16 @@ export const DashboardComponent = () => {
     DEFAULT_CITY_LATITUDE,
     DEFAULT_CITY_LONGITUDE,
   ];
-
+  const DashboardMap: ComponentType<{
+    data: {
+      getDevicesLivePosition: {
+        data: DeviceActivityReturnType[];
+      };
+    };
+    defaultPosition: LatLngExpression;
+  }> = dynamic(() => import("./DasboardMap" as string), {
+    ssr: false,
+  });
   const { data, error } = useQuery(GET_DEVICE_ACTIVITY, {
     fetchPolicy: "network-only",
     variables: {
@@ -61,39 +67,12 @@ export const DashboardComponent = () => {
           className="border-2 border-primary-40 absolute left-12 top-5 z-50 self-end "
           calendarClassName="top-10 left-14"
         />
-        <MapContainer
-          className="desktop:h-[100%] laptop:h-[100%] "
-          center={defaultPosition}
-          zoom={13}
-          style={{ zIndex: "0" }}
-          scrollWheelZoom={true}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {data &&
-            data.getDevicesLivePosition.data.map(
-              (deviceData: DeviceActivityReturnType) => {
-                const { latitude, longitude } = deviceData ?? {};
-                return (
-                  <Marker
-                    position={[latitude, longitude]}
-                    key={deviceData.deviceId}
-                  >
-                    <Popup>
-                      {`Driver: ${deviceData?.name}`} <br />{" "}
-                      {`Team: ${deviceData?.teamName}`}
-                      <br />
-                      {` Last checked: ${dayjs.utc(
-                        deviceData?.lastTimeCreated
-                      )}`}
-                    </Popup>
-                  </Marker>
-                );
-              }
-            )}
-        </MapContainer>
+        <DashboardMap
+          {...{
+            data: data,
+            defaultPosition: defaultPosition,
+          }}
+        />
       </div>
     </div>
   );
