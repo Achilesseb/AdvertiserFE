@@ -1,6 +1,5 @@
 import { TableHeaderElement } from "@/Components/Table/TableHeader";
 import { createColumnHelper } from "@tanstack/react-table";
-import "react-tooltip/dist/react-tooltip.css";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { AiOutlineHome, AiOutlinePhone } from "react-icons/ai";
 
