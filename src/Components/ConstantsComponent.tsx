@@ -1,14 +1,10 @@
 "use client";
 
-import { GET_ALL_DEVICES } from "@/graphql/schemas/devicesSchema";
 import { createColumnHelper, ColumnDefBase } from "@tanstack/react-table";
 import dayjs from "dayjs";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
-import { Snackbar } from "./SnackBar";
 import { TableComponent } from "./Table/Table";
 import { TableHeaderElement } from "./Table/TableHeader";
 import { useMutation } from "@apollo/client";
@@ -19,10 +15,7 @@ import {
   GET_ALL_CONSTANTS,
   GET_CONSTANT_BY_ID,
 } from "@/graphql/schemas/constantsSchema";
-import {
-  ConstantsValidationSchema,
-  DevicesValidationSchema,
-} from "@/validationSchemas/devices";
+import { ConstantsValidationSchema } from "@/validationSchemas/devices";
 import Form from "./form/FormMain";
 import { FormTemplateDefinition } from "./form/formTemplate";
 

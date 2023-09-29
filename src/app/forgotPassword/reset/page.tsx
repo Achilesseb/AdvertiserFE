@@ -12,10 +12,15 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const router = useRouter();
-  const hashArr = window.location.hash
-    .substring(1)
-    .split("&")
-    .map((param) => param.split("="));
+
+  let hashArr: Array<string[]> = [];
+
+  if (window) {
+    hashArr = window.location.hash
+      .substring(1)
+      .split("&")
+      .map((param) => param.split("="));
+  }
 
   let accessToken: string, refreshToken: string;
 
