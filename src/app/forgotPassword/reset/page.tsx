@@ -15,7 +15,7 @@ const ResetPassword = () => {
 
   let hashArr: Array<string[]> = [];
 
-  if (window) {
+  if (typeof window !== "undefined") {
     hashArr = window.location.hash
       .substring(1)
       .split("&")
