@@ -5,33 +5,34 @@ import { Snackbar } from "@/Components/SnackBar";
 import InputComponent from "@/Components/form/formInputs/InputComponent";
 import { supabase } from "@/supabase";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [access_token, setAccessToken] = useState<string>();
+  const [refresh_token, setRefreshToken] = useState<string>();
+
   const router = useRouter();
 
-  let hashArr: Array<string[]> = [];
-
-  if (typeof window !== "undefined") {
-    hashArr = window.location.hash
-      .substring(1)
-      .split("&")
-      .map((param) => param.split("="));
-  }
-
-  let accessToken: string, refreshToken: string;
-
-  for (const [key, value] of hashArr) {
-    if (key === "access_token") {
-      accessToken = value;
+  useEffect(() => {
+    let hashArr: Array<string[]> = [];
+    if (typeof window !== "undefined") {
+      hashArr = window.location.hash
+        .substring(1)
+        .split("&")
+        .map((param) => param.split("="));
     }
-    if (key === "refresh_token") {
-      refreshToken = value;
+    for (const [key, value] of hashArr) {
+      if (key === "access_token") {
+        setAccessToken(value);
+      }
+      if (key === "refresh_token") {
+        setRefreshToken(value);
+      }
     }
-  }
+  }, []);
 
   const onSubmit = async () => {
     try {
@@ -39,10 +40,10 @@ const ResetPassword = () => {
         return toast.custom(
           <Snackbar type="error" message={`Passwords don't match!`} />
         );
-
+      if (!access_token || !refresh_token) return;
       await supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: refreshToken,
+        access_token,
+        refresh_token,
       });
 
       await supabase.auth.updateUser({ password });
