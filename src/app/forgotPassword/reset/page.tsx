@@ -1,6 +1,6 @@
 "use client";
 
-import { ResetPasswordComponent } from "@/Components/ResetPasswordComponent";
+import ResetPasswordComponent from "@/Components/ResetPasswordComponent";
 
 const ResetPassword = () => <ResetPasswordComponent />;
 
