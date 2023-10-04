@@ -60,7 +60,7 @@ const ResetPasswordComponent = () => {
   };
 
   return (
-    <div className="w-full h-full flex justify-center items-center ">
+    <div className="w-full h-full flex justify-center items-center mobile:bg-primary-50 ">
       <div className="flex flex-col justify-center items-center text-center tablet:w-full laptop:w-[40vw] desktop:w-[40vw] laptop:h-[80vh] desktop:h-[80vh] tablet:h-full border-4 laptop:border-primary-40 desktop:border-primary-40 tablet:border-none">
         <div className="font-bold text-headlineSmall mb-20 tablet:text-white laptop:text-primary-40 desktop:text-primary-40 text-2xl">
           Reset password
