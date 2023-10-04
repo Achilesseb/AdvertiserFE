@@ -362,3 +362,37 @@ export const AttentionSVG = ({ disabled, color, width, height }: SvgProps) => {
     </svg>
   );
 };
+
+export const MenuSvg = ({ disabled, color, width, height }: SvgProps) => {
+  return (
+    <svg
+      width={`${width ? width : "22"}`}
+      height={`${height ? height : "19"}`}
+      viewBox="0 0 22 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4 18L20 18"
+        fill={`${disabled ? "#858E97" : color ? color : "#555A63"}`}
+        stroke={color ?? "#000000"}
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        d="M4 12L20 12"
+        stroke={color ?? "#000000"}
+        fill={`${disabled ? "#858E97" : color ? color : "#555A63"}`}
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+      <path
+        d="M4 6L20 6"
+        stroke={color ?? "#000000"}
+        fill={`${disabled ? "#858E97" : color ? color : "#555A63"}`}
+        stroke-width="2"
+        stroke-linecap="round"
+      />
+    </svg>
+  );
+};

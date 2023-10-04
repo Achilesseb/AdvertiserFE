@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head />
-      <body className="flex flex-col h-[100vh] w-full gap-4 overflow-visible font-[Inter-500] ">
+      <body className="flex flex-col h-[100vh] w-full gap-4 overflow-visible font-[Inter-500] overflow-x-hidden tablet:bg-primary-50">
         <UserProvider>
           <NavigationBar />
           <div className="w-full h-full py-0 px-4">

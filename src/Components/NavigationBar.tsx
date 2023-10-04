@@ -3,9 +3,17 @@ import { AuthSession } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import "../styles/input.css";
+import { MenuSvg } from "@/constants/svg";
 
 export const NavigationBar = () => {
+  const [verticalNavigation, setVerticalNavigation] = useState(false);
   const [session, setSession] = useState<AuthSession | null>(null);
+
+  useEffect(() => {
+    if (window !== undefined && window.innerWidth > 1200) {
+      setVerticalNavigation(false);
+    }
+  }, []);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -14,16 +22,19 @@ export const NavigationBar = () => {
   }, []);
 
   return (
-    <nav className="w-full grid grid-cols-6 items-center bg-primary-50 text-primary-99 py-4 px-10">
+    <nav className=" relative w-full grid grid-cols-6 items-center bg-primary-50 text-primary-99 py-4 px-10 ">
+      {session && session.user.user_metadata?.role === "admin" && (
+        <div className="  tablet:visible laptop:hidden desktop:hidden">
+          <button
+            onClick={() => setVerticalNavigation(!verticalNavigation)}
+            className="text-white  focus:outline-none"
+          >
+            <MenuSvg color="white" />
+          </button>
+        </div>
+      )}
+
       <a href="/" className="p-2 mr-4 inline-flex items-center no-underline">
-        <svg
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8 mr-2"
-          fill="white"
-        >
-          <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z" />
-        </svg>
         <span className="text-xl text-white font-bold uppercase tracking-wide">
           Advertiser
         </span>
@@ -31,10 +42,20 @@ export const NavigationBar = () => {
 
       {session && session.user.user_metadata?.role === "admin" ? (
         <div
-          className="top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto col-start-3 col-end-7 text-primary-99"
+          className={`top-navbar w-full  lg:w-auto col-start-2 col-end-7 text-primary-99 laptop:visible desktop:visible"   ${
+            verticalNavigation
+              ? "absolute top-20 left-0 tablet:visible bg-primary-40 "
+              : "lg:inline-flex lg:flex-grow tablet:hidden "
+          }`}
           id="navigation"
         >
-          <ul className=" lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto flex w-full h-full m-0 lg:items-center lg:h-auto justify-evenly ">
+          <ul
+            className={`h-full m-0  justify-evenly ${
+              verticalNavigation
+                ? "flex flex-col "
+                : "flex lg:inline-flex lg:flex-row lg:ml-auto lg:w-autow-full lg:items-center lg:h-auto "
+            }`}
+          >
             <li>
               <a
                 href="/"

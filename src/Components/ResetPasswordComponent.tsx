@@ -20,9 +20,9 @@ const ResetPasswordComponent = () => {
     let hashArr: Array<string[]> = [];
     if (typeof window !== "undefined") {
       hashArr = window.location.hash
-          .substring(1)
-          .split("&")
-          .map((param) => param.split("="));
+        .substring(1)
+        .split("&")
+        .map((param) => param.split("="));
     }
     for (const [key, value] of hashArr) {
       if (key === "access_token") {
@@ -38,7 +38,7 @@ const ResetPasswordComponent = () => {
     try {
       if (password !== newPassword)
         return toast.custom(
-            <Snackbar type="error" message={`Passwords don't match!`} />
+          <Snackbar type="error" message={`Passwords don't match!`} />
         );
       if (!access_token || !refresh_token) return;
       await supabase.auth.setSession({
@@ -51,7 +51,7 @@ const ResetPasswordComponent = () => {
       await supabase.auth.signOut();
 
       toast.custom(
-          <Snackbar type="success" message={`Password updated succesfully!`} />
+        <Snackbar type="success" message={`Password updated succesfully!`} />
       );
       router.push("/");
     } catch (error) {
@@ -60,44 +60,44 @@ const ResetPasswordComponent = () => {
   };
 
   return (
-      <div className="w-full h-full flex justify-center items-center">
-        <div className="flex flex-col justify-center items-center w-[40vw] h-[80vh] border-2 border-primary-40">
-          <div className="font-bold text-headlineSmall mb-20 text-primary-40 text-2xl">
-            Reset your SmartAds password
-          </div>
-
-          <InputComponent
-              name="password"
-              type="password"
-              id="password"
-              label="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              labelRequired
-              labelRequiredClassName="text-error-60"
-              containerClassName={`w-4/5 text-primary-50 mt-6`}
-              inputClassName="w-full"
-          />
-          <InputComponent
-              name="new password"
-              type="password"
-              id="newpassword"
-              label="Confirm new password"
-              onChange={(e) => setNewPassword(e.target.value)}
-              labelRequired
-              labelRequiredClassName="text-error-60"
-              containerClassName={`w-4/5 text-primary-50 mt-6`}
-              inputClassName="w-full"
-          />
-
-          <DefaultButtonComponent
-              buttonType="button"
-              onButtonClick={onSubmit}
-              styleType="filled"
-              buttonText="Reset password"
-              modifier="w-2/5 mt-10"
-          />
+    <div className="w-full h-full flex justify-center items-center ">
+      <div className="flex flex-col justify-center items-center text-center tablet:w-full laptop:w-[40vw] desktop:w-[40vw] laptop:h-[80vh] desktop:h-[80vh] tablet:h-full border-4 laptop:border-primary-40 desktop:border-primary-40 tablet:border-none">
+        <div className="font-bold text-headlineSmall mb-20 tablet:text-white laptop:text-primary-40 desktop:text-primary-40 text-2xl">
+          Reset password
         </div>
+
+        <InputComponent
+          name="password"
+          type="password"
+          id="password"
+          label="Password"
+          onChange={(e) => setPassword(e.target.value)}
+          labelRequired
+          labelRequiredClassName="text-error-60"
+          containerClassName={`w-4/5 text-primary-50 mt-6 tablet:text-white latpop:text-primary-40 desktop:text-primary-40 `}
+          inputClassName="w-full"
+        />
+        <InputComponent
+          name="new password"
+          type="password"
+          id="newpassword"
+          label="Confirm new password"
+          onChange={(e) => setNewPassword(e.target.value)}
+          labelRequired
+          labelRequiredClassName="text-error-60"
+          containerClassName={`w-4/5 text-primary-50 mt-6 tablet:text-white latpop:text-primary-40 desktop:text-primary-40 `}
+          inputClassName="w-full"
+        />
+
+        <DefaultButtonComponent
+          buttonType="button"
+          onButtonClick={onSubmit}
+          styleType="filled"
+          buttonText="Reset password"
+          modifier="tablet:w-4/5 laptop:w-2/5 desktop:w-2/5   tablet:bg-white tablet:text-primary-40 tablet:mt-16 laptop:mt-10 desktop:mt-10"
+        />
       </div>
+    </div>
   );
 };
 
