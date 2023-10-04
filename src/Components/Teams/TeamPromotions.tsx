@@ -145,19 +145,7 @@ export const TeamPromotions = ({
   };
 
   return (
-    <div className="flex justify-evenly ">
-      <div className="flex justify-center items-start h-full w-12/12 mt-10 desktop:full laptop:w-4/12">
-        {selectedPromoUrl ? (
-          <ReactPlayer
-            controls
-            {...(selectedPromoUrl && { url: selectedPromoUrl })}
-          />
-        ) : (
-          <div>
-            <DotLoader size={100} color="#286DA9" />
-          </div>
-        )}
-      </div>
+    <div className="flex flex-wrap justify-evenly w-full items-start gap-4 p-10 border-4 rounded-md border-neutral-80 shadow-lg">
       <div>
         <div className="flex justify-between items-center">
           <div className="w-12/12">
@@ -200,6 +188,18 @@ export const TeamPromotions = ({
             filters: { teamId: searchParams.teamId },
           })}
         />
+      </div>
+      <div className="flex justify-center items-start">
+        {selectedPromoUrl ? (
+          <ReactPlayer
+            controls
+            {...(selectedPromoUrl && { url: selectedPromoUrl })}
+          />
+        ) : (
+          <div>
+            <DotLoader size={100} color="#286DA9" />
+          </div>
+        )}
       </div>
     </div>
   );
