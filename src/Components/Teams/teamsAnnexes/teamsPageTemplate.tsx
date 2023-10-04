@@ -1,4 +1,5 @@
 import { TableHeaderElement } from "@/Components/Table/TableHeader";
+import { secondsToHms } from "@/utils/videoDuration";
 import { createColumnHelper } from "@tanstack/react-table";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { AiOutlineFieldTime } from "react-icons/ai";
@@ -11,7 +12,7 @@ export type TeamsModel = {
   totalDrivers: number;
   drivers: string;
   totalPromotions: number;
-  totalDurations: number;
+  totalDuration: number;
 };
 
 const columnHelper = createColumnHelper<TeamsModel>();
@@ -42,15 +43,15 @@ const defaultTeamsColumn = [
   }),
   columnHelper.accessor("totalDrivers", {
     header: "Number of drivers",
-    cell: (info) => info.getValue(),
+    cell: (info) => info.getValue() ?? 0,
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor("totalDurations", {
+  columnHelper.accessor("totalDuration", {
     header: "Total video time",
     cell: (info) => (
       <div className="flex justify-center items-center gap-1">
         <AiOutlineFieldTime color="#008000" />
-        {info.getValue()} secunde
+        {secondsToHms(info.getValue() ?? 0)}
       </div>
     ),
 
@@ -60,7 +61,7 @@ const defaultTeamsColumn = [
     header: "Promotions",
     cell: (info) => (
       <div className="flex justify-center items-center gap-1">
-        {info.getValue()}
+        {info.getValue() ?? 0}
       </div>
     ),
 
