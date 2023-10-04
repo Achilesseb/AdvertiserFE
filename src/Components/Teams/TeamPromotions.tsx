@@ -1,7 +1,4 @@
-import {
-  DELETE_USERS_FROM_TEAMS,
-  GET_TEAMS_PROMOTIONS,
-} from "@/graphql/schemas/teamsSchema";
+import { GET_TEAMS_PROMOTIONS } from "@/graphql/schemas/teamsSchema";
 import { ColumnDefBase, Row } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 
@@ -24,8 +21,8 @@ import {
 import ReactPlayer from "react-player";
 import { getVideoUrlAws } from "@/aws/awsHelpers";
 import DotLoader from "react-spinners/DotLoader";
-import { generatePromotionsTableHeaderElements } from "../Promotions/promotionsAnnexes/promotionsPageTemplate";
 import { generateTeamPromotionsTableHeaderElements } from "../Drivers/driversAnnexes/driversPageTemplate";
+
 export const TeamPromotions = ({
   searchParams,
 }: {
@@ -49,6 +46,7 @@ export const TeamPromotions = ({
       promotionIds: toDeleteDataIds,
     },
   });
+
   const [addNewPromoToTeam] = useMutation(ADD_NEW_PROMOTION_TO_TEAM, {
     variables: {
       input: {
@@ -57,6 +55,7 @@ export const TeamPromotions = ({
       },
     },
   });
+
   const { data, refetch } = useQuery<GetTeamPromosResultType>(
     GET_TEAMS_PROMOTIONS,
     {
@@ -74,11 +73,8 @@ export const TeamPromotions = ({
       },
     }
   );
-  const polishedDriverTableHeaderElements = {
-    addNew: {
-      ...driverTableHeaderElements.addNew,
-      onClick: () => router.push("/promotions/newPromotion"),
-    },
+
+  const polishedTeamPromotionsTableHeader = {
     delete: {
       ...driverTableHeaderElements.delete,
       onClick: async () => {
@@ -199,7 +195,7 @@ export const TeamPromotions = ({
               ColumnDefBase<TeamsPromotionsView, string>
             >
           }
-          polishedHeaderElements={polishedDriverTableHeaderElements}
+          polishedHeaderElements={polishedTeamPromotionsTableHeader}
           {...(searchParams?.teamId && {
             filters: { teamId: searchParams.teamId },
           })}
