@@ -131,7 +131,7 @@ export const AllConstantsPage = () => {
 
   const [deleteEntities] = useMutation(DELETE_CONSTANTS, {
     variables: {
-      devicesIds: toDeleteDataIds,
+      constantsIds: toDeleteDataIds,
     },
   });
 

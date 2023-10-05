@@ -5,9 +5,11 @@ import { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import { ReactNode } from "react";
 const DashboardMap = ({
   defaultPosition,
   data,
+  children,
 }: {
   defaultPosition: LatLngExpression;
   data: {
@@ -15,35 +17,42 @@ const DashboardMap = ({
       data: DeviceActivityReturnType[];
     };
   };
+  children: ReactNode;
 }) => (
-  <MapContainer
-    className="desktop:h-[100%] laptop:h-[100%] "
-    center={defaultPosition}
-    zoom={13}
-    style={{ zIndex: "0" }}
-    scrollWheelZoom={true}
-  >
-    <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-    {data &&
-      data.getDevicesLivePosition.data.map(
-        (deviceData: DeviceActivityReturnType) => {
-          const { latitude, longitude } = deviceData ?? {};
-          return (
-            <Marker position={[latitude, longitude]} key={deviceData.deviceId}>
-              <Popup>
-                {`Driver: ${deviceData?.name}`} <br />{" "}
-                {`Team: ${deviceData?.teamName}`}
-                <br />
-                {` Last checked: ${dayjs.utc(deviceData?.lastTimeCreated)}`}
-              </Popup>
-            </Marker>
-          );
-        }
-      )}
-  </MapContainer>
+  <>
+    {children}
+    <MapContainer
+      className="desktop:h-[100%] laptop:h-[100%] tablet:h-[100%] relative"
+      center={defaultPosition}
+      zoom={13}
+      style={{ zIndex: "0" }}
+      scrollWheelZoom={true}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {data &&
+        data.getDevicesLivePosition.data.map(
+          (deviceData: DeviceActivityReturnType) => {
+            const { latitude, longitude } = deviceData ?? {};
+            return (
+              <Marker
+                position={[latitude, longitude]}
+                key={deviceData.deviceId}
+              >
+                <Popup>
+                  {`Driver: ${deviceData?.name}`} <br />{" "}
+                  {`Team: ${deviceData?.teamName}`}
+                  <br />
+                  {` Last checked: ${dayjs.utc(deviceData?.lastTimeCreated)}`}
+                </Popup>
+              </Marker>
+            );
+          }
+        )}
+    </MapContainer>
+  </>
 );
 
 export default DashboardMap;

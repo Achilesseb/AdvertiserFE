@@ -105,7 +105,7 @@ export const generateDriversTableHeaderElements = (
     type: "input",
     inputPlaceHolder: "Search after city name",
     styleModifiers:
-      "col-start-1 col-end-3 w-full border-2 rounded-md border-neutral-60 text-center hover:border-primary-60  focus:border-primary-60 focus-ring",
+      "col-start-1 col-end-3 w-full border-2 rounded-md border-neutral-60 px-4 py-2 text-xl text-center hover:border-primary-60  focus:border-primary-60 focus-ring",
   },
   addNew: {
     type: "button",

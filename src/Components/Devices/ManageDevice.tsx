@@ -33,10 +33,10 @@ export const ManageDevice = ({
 
   const formStylesModifiers = {
     formContainerStyles:
-      "relative h-full flex flex-col gap-4 justify-start desktop:w-6/12 laptop:w-8/12",
+      "relative flex flex-col gap-4 justify-start desktop:w-6/12 laptop:w-8/12 border-b-4 border-l-2 rounded-md border-neutral-80 shadow-lg p-20 tablet:p-4",
     formInputsContainerStyles: "flex flex-col gap-4 mb-4 mt-4",
     formTitleStyles:
-      "flex justify-between desktop:w-6/12 laptop:w-8/12 mb-2 mt-2 ",
+      "flex justify-between desktop:w-6/12 laptop:w-8/12 mb-4 mt-2 text-2xl",
     formButtonContainerStyles: "mb-4  bottom-0 w-full flex",
   };
 

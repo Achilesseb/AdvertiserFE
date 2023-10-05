@@ -60,7 +60,7 @@ export const AllDevicesPage = ({
   };
 
   return (
-    <div className="h-full px-20 py-4 flex flex-col gap-4">
+    <div className="h-full px-20 py-4 border-b-4 border-l-2 rounded-md border-neutral-80 shadow-lg tablet:p-0">
       <TableComponent<DeviceModel>
         routerPath="/devices"
         headerData="Devices data"

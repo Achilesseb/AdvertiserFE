@@ -100,8 +100,9 @@ export const ManageDriver = ({
 
   const formStylesModifiers = {
     formContainerStyles:
-      "h-auto flex flex-col items-center gap-4 w-full justify-center w-10/12",
-    formInputsContainerStyles: "grid grid-cols-2 w-full gap-x-20 gap-y-4",
+      "h-auto flex flex-col items-center gap-4 w-full justify-center w-10/12 border-b-4 border-l-2 rounded-md border-neutral-80 shadow-lg p-20 tablet:p-4",
+    formInputsContainerStyles:
+      "grid grid-cols-2 w-full gap-x-20 gap-y-4 tablet:flex tablet:flex-col",
     formTitleStyles:
       "flex justify-between desktop:w-6/12 laptop:w-8/12 mb-6 mt-2 text-xl",
     formButtonContainerStyles: "mb-4 mt-10 flex w-6/12 ",

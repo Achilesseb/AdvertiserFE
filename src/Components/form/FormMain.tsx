@@ -163,7 +163,12 @@ const Form = <DataType extends {}, U extends FieldValues>({
   if (loading) return null;
 
   return (
-    <div className={mergeStyles("w-full h-full px-20 ", containerStyles)}>
+    <div
+      className={mergeStyles(
+        "w-full h-full px-20 tablet:px-0",
+        containerStyles
+      )}
+    >
       {generateSectionTitle()}
       <EWFormTitle
         generateCustomSectionButtons={generateCustomSectionButtons}

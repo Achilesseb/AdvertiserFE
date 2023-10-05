@@ -110,8 +110,8 @@ export const TeamDrivers = ({
   }, [data, pagination.resultsPerPage]);
   return (
     <>
-      <div className="flex justify-between items-center">
-        <div className="w-12/12">
+      <div className="flex justify-between items-center tablet:flex-col tablet:gap-4 gap-8">
+        <div className="w-full">
           <SearchInputComponent
             setSelectedEntityId={setSelectedDriverId}
             queryExpression={GET_ALL_UNTEAMED_USERS}
@@ -125,7 +125,7 @@ export const TeamDrivers = ({
           />
         </div>
         <DefaultButtonComponent
-          modifier="desktop:w-7/12 laptop:w-7/12"
+          modifier="desktop:w-7/12 laptop:w-7/12 tablet:w-full"
           buttonText="Add to Team"
           buttonType="button"
           styleType="filled"

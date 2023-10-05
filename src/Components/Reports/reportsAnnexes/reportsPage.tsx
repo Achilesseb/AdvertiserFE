@@ -75,7 +75,7 @@ export const generateClientsReportsTableHeaderElements = {
     type: "input",
     inputPlaceHolder: "Search after client name",
     styleModifiers:
-      "col-start-1 col-end-3 w-full border-2 rounded-md border-neutral-60 text-center hover:border-primary-60  focus:border-primary-60 focus-ring mb-4",
+      "col-start-1 col-end-3 px-4 py-2 text-xl w-full border-2 rounded-md border-neutral-60 text-center hover:border-primary-60  focus:border-primary-60 focus-ring mb-4",
   },
 };
 
@@ -84,6 +84,6 @@ export const generateClientsPromotionsReportsTableHeaderElements = {
     type: "input",
     inputPlaceHolder: "Search after promotion title",
     styleModifiers:
-      "col-start-1 col-end-3 w-full border-2 rounded-md border-neutral-60 text-center hover:border-primary-60  focus:border-primary-60 focus-ring mb-4",
+      "col-start-1 col-end-3 px-4 py-2 text-xl w-full border-2 rounded-md border-neutral-60 text-center hover:border-primary-60  focus:border-primary-60 focus-ring mb-4",
   },
 };

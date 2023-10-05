@@ -145,10 +145,10 @@ export const TeamPromotions = ({
   };
 
   return (
-    <div className="flex flex-wrap justify-evenly w-full items-start gap-4 p-10 border-4 rounded-md border-neutral-80 shadow-lg">
+    <div className="flex flex-wrap justify-evenly w-full items-start gap-4 p-10 border-4 rounded-md border-neutral-80 shadow-lg tablet:p-2">
       <div>
-        <div className="flex justify-between items-center">
-          <div className="w-12/12">
+        <div className="flex justify-between items-center tablet:flex-col tablet:gap-4 gap-4">
+          <div className="w-full">
             <SearchInputComponent
               setSelectedEntityId={setSelectedPromotId}
               queryExpression={GET_ALL_PROMOTIONS}
@@ -162,7 +162,7 @@ export const TeamPromotions = ({
             />
           </div>
           <DefaultButtonComponent
-            modifier="desktop:w-7/12 laptop:w-7/12"
+            modifier="desktop:w-7/12 laptop:w-7/12 tablet:w-full"
             buttonText="Add to Team"
             buttonType="button"
             styleType="filled"
@@ -189,7 +189,7 @@ export const TeamPromotions = ({
           })}
         />
       </div>
-      <div className="flex justify-center items-start">
+      <div className="flex justify-center items-start tablet:w-auto tablet:hidden">
         {selectedPromoUrl ? (
           <ReactPlayer
             controls

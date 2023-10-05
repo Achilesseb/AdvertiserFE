@@ -11,7 +11,7 @@ import {
 import toast from "react-hot-toast";
 import { Snackbar } from "../SnackBar";
 import { LatLngExpression } from "leaflet";
-import { ComponentType, useState } from "react";
+import { ComponentType, ReactNode, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dynamic from "next/dynamic";
@@ -40,6 +40,7 @@ export const DashboardComponent = () => {
       };
     };
     defaultPosition: LatLngExpression;
+    children: ReactNode;
   }> = dynamic(() => import("./DasboardMap" as string), {
     ssr: false,
   });
@@ -58,21 +59,22 @@ export const DashboardComponent = () => {
   }
 
   return (
-    <div className="desktop:h-[88vh] laptop:h-[85vh] overflow-hidden">
-      <div className="relative w-full h-full">
-        <DatePicker
-          showIcon
-          selected={startDate}
-          onChange={(date) => setStartDate(date as Date)}
-          className="border-2 border-primary-40 absolute left-12 top-5 z-50 self-end "
-          calendarClassName="top-10 left-14"
-        />
+    <div className="desktop:h-[88vh] laptop:h-[85vh] tablet:h-[110%] tablet:mt-[-25px] tablet:m-0 tablet:p-0 overflow-hidden ">
+      <div className=" w-full h-full">
         <DashboardMap
           {...{
             data: data,
             defaultPosition: defaultPosition,
           }}
-        />
+        >
+          <DatePicker
+            showIcon
+            selected={startDate}
+            onChange={(date) => setStartDate(date as Date)}
+            className="border-2 border-primary-40 absolute left-12 top-5 z-10"
+            calendarClassName="top-10 left-14"
+          />
+        </DashboardMap>
       </div>
     </div>
   );

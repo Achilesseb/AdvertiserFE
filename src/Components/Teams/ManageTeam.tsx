@@ -30,16 +30,17 @@ export const ManageTeam = ({
 
   const formStylesModifiers = {
     formContainerStyles:
-      "relative h-full flex flex-col gap-4 justify-start w-full mt-2",
+      "relative h-full flex flex-col gap-4 justify-start w-full mt-2 tablet:p-2",
     formInputsContainerStyles: "flex flex-col gap-4 mb-4 mt-4",
-    formTitleStyles: "flex justify-between desktop:w-6/12 laptop:w-6/12 mt-8 ",
+    formTitleStyles:
+      "flex justify-between desktop:w-6/12 laptop:w-6/12 mt-8 tablet:p-2",
     formButtonContainerStyles: "mt-4  flex",
   };
 
   return (
-    <div className="flex w-full flex-wrap ">
-      <div className="flex w-full flex-wrap items-center justify-center p-4 gap-10">
-        <div className="desktop:w-4/12 laptop:w-4/12 border-b-4 border-r-2 rounded-md border-neutral-80 py-10 shadow-lg">
+    <div className="flex w-full tablet:p-0">
+      <div className="flex w-full flex-wrap items-center justify-center  gap-10  tablet:flex-col tablet:p-0 laptop:p-4 desktop:p-4">
+        <div className="desktop:w-4/12 laptop:w-4/12 tablet:w-full border-b-4 border-r-2 rounded-md border-neutral-80 py-10 shadow-lg">
           <Form
             headlessForm={false}
             queryExpression={GET_TEAM_BY_ID}
@@ -57,16 +58,16 @@ export const ManageTeam = ({
             })}
           />
         </div>
-        <div className="px-20 py-10 flex flex-col gap-4 desktop:w-7/12 laptop:w-7/12 border-b-4 border-l-2 rounded-md border-neutral-80 shadow-lg">
+        <div className="px-20 py-10 flex flex-col gap-4 desktop:w-7/12 laptop:w-7/12 border-b-4 border-l-2 rounded-md border-neutral-80 shadow-lg tablet:w-full tablet:p-2">
           <TeamDrivers searchParams={searchParams} />
         </div>
-        <div className="flex flex-col w-full gap-4  mx-10 justify-center items-center">
+        <div className="flex flex-col w-full gap-4  mx-10 justify-center items-center tablet:p-0 tablet:m-0">
           {expandPromotionsData ? (
             <>
               <DefaultButtonComponent
                 styleType="text"
                 buttonText="Hide promotion data"
-                modifier="w-5/12 "
+                modifier="w-5/12 tablet:w-full"
                 onButtonClick={() => setExpandPromotionsData(false)}
               />
 
@@ -76,7 +77,7 @@ export const ManageTeam = ({
             <div className="w-full flex justify-center">
               <DefaultButtonComponent
                 styleType="filled"
-                modifier="w-5/12"
+                modifier="w-5/12  tablet:w-full"
                 buttonText="Expand promotion data"
                 onButtonClick={() => setExpandPromotionsData(true)}
               />

@@ -12,10 +12,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head />
-      <body className="flex flex-col h-[100vh] w-full gap-4 overflow-visible font-[Inter-500] overflow-x-hidden ">
+      <body className="flex flex-col h-[100vh] w-full tablet:gap-0 laptop:gap-4 laptop:pb-4 overflow-visible font-[Inter-500] overflow-x-hidden ">
         <UserProvider>
           <NavigationBar />
-          <div className="w-full h-full py-0 px-4">
+          <div className="w-full h-full py-0 tablet:px-0 desktop:px-4  laptop:px-4 ">
             <ApolloProvider client={client}>{children}</ApolloProvider>
           </div>
         </UserProvider>

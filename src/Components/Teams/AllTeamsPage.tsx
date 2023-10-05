@@ -62,19 +62,21 @@ export const AllTeamsPage = ({
   };
 
   return (
-    <TableComponent<TeamsModel>
-      setToDeleteDataIds={setToDeleteDataIds}
-      polishedHeaderElements={polishedPromotionsTableHeaderElements}
-      routerPath={"/teams"}
-      headerData="Teams"
-      apolloQuery={GET_ALL_TEAMS}
-      columns={
-        defaultTeamsColumn as unknown as Array<
-          ColumnDefBase<TeamsModel, string>
-        >
-      }
-      filters={defaultPromotionFilters}
-    />
+    <div className="border-b-4 border-l-2 rounded-md border-neutral-80 shadow-lg p-20 tablet:p-0">
+      <TableComponent<TeamsModel>
+        setToDeleteDataIds={setToDeleteDataIds}
+        polishedHeaderElements={polishedPromotionsTableHeaderElements}
+        routerPath={"/teams"}
+        headerData="Teams"
+        apolloQuery={GET_ALL_TEAMS}
+        columns={
+          defaultTeamsColumn as unknown as Array<
+            ColumnDefBase<TeamsModel, string>
+          >
+        }
+        filters={defaultPromotionFilters}
+      />
+    </div>
   );
 };
 export type TeamPageSearchParams = {

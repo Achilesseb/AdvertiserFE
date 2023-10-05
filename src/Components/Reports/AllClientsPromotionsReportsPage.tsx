@@ -13,8 +13,8 @@ import { GET_CLIENTS_PROMOTIONS_REPORTS } from "@/graphql/schemas/reportsSchema"
 import { ColumnDefBase } from "@tanstack/react-table";
 import { ClientModel } from "../Clients/clientsAnnexes/clientsPageTemplate";
 import { TableComponent } from "../Table/Table";
-import { DateRangePicker, RangeKeyDict } from "react-date-range";
 import { DateSelection } from "./AllClientsReportsPage";
+import { DatePickerComponent } from "../DatePickerComponent";
 
 export const AllClientsPromotionsReportsPage = ({
   clientId,
@@ -26,18 +26,6 @@ export const AllClientsPromotionsReportsPage = ({
     endDate: new Date(),
     key: "selection",
   });
-  const [showDatePicker, setShowDatePicker] = useState(true);
-
-  const handleSelect = (ranges: RangeKeyDict) => {
-    setSelectedDateRange(ranges.selection as unknown as DateSelection);
-  };
-  const onClickClear = () => {
-    setSelectedDateRange({
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    });
-  };
 
   const [nameFilter, setNameFilter] = useState<string>("");
   const defaultPromotionFilters = {
@@ -61,32 +49,11 @@ export const AllClientsPromotionsReportsPage = ({
   } as Record<string, TableHeaderElement>;
 
   return (
-    <div className="">
-      {showDatePicker ? (
-        <>
-          <DateRangePicker
-            ranges={[selectedDateRange]}
-            onChange={handleSelect}
-            moveRangeOnFirstSelection={false}
-            direction="horizontal"
-            months={2}
-          />
-          <button
-            className=" text-success-50 px-4 border-2 ml-2 mt-2 border-neutral-40 p-2 rounded-xl"
-            onClick={onClickClear}
-          >
-            Clear
-          </button>
-        </>
-      ) : null}
-
-      <button
-        className="text-danger px-4 border-2 border-neutral-40 p-2 rounded-xl ml-2"
-        onClick={() => setShowDatePicker(!showDatePicker)}
-      >
-        {showDatePicker ? "Hide" : "Pick dates"}
-      </button>
-
+    <div className="border-b-4 border-l-2 rounded-md border-neutral-80 shadow-lg laptop:p-20 flex tablet:flex-col gap-10 justify-center tablet:px-2 tablet:py-4  min-h-full">
+      <DatePickerComponent
+        setSelectedDateRange={setSelectedDateRange}
+        selectedDateRange={selectedDateRange}
+      />
       <TableComponent<ClientModel>
         polishedHeaderElements={polishedClientsReportsTableHeaderElements}
         rowsClickable={false}

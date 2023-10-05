@@ -205,7 +205,7 @@ export const TableComponent = <DataType extends {}>({
 
   if (!table) return;
   return (
-    <div className="p-2 flex flex-col gap-2">
+    <div className="p-2 flex flex-col gap-6">
       {tableHeader ? (
         <h3 className="text-2xl">{`${headerData} ${
           totalCount ? `(${totalCount})` : ""

@@ -60,8 +60,8 @@ export const ManagePromotion = ({
 
   const formStylesModifiers = {
     formContainerStyles:
-      "h-auto flex flex-col items-center gap-4 justify-center w-full px-0",
-    formInputsContainerStyles: "flex flex-col w-full gap-x-20 gap-y-6",
+      "h-auto flex flex-col items-center gap-4 justify-center w-full px-0 border-b-4 border-l-2 rounded-md border-neutral-80 shadow-lg p-20 tablet:p-0",
+    formInputsContainerStyles: "flex flex-col w-full p-10 gap-x-20 gap-y-6",
     formTitleStyles:
       "flex justify-center gap-4 desktop:w-6/12 laptop:w-8/12 mb-6 mt-2 text-xl",
     formButtonContainerStyles: "mb-2 mt-2 flex w-6/12 ",
@@ -118,7 +118,7 @@ export const ManagePromotion = ({
 
       element: () => {
         return (
-          <div className="w-8/10 flex gap-4 items-center justify-between">
+          <div className="w-8/10 flex gap-4 items-center justify-between tablet:flex-col">
             <span>Video file: </span>
             <input
               type="file"
@@ -212,8 +212,8 @@ export const ManagePromotion = ({
   };
 
   return (
-    <div className="flex">
-      <div className="w-6/12">
+    <div className="flex tablet:flex-col tablet:justify-center tablet:items-center">
+      <div className="w-6/12 tablet:w-10/12">
         <Form
           headlessForm={false}
           queryExpression={GET_PROMOTION_BY_ID}
@@ -238,7 +238,7 @@ export const ManagePromotion = ({
             })}
         />
       </div>
-      <div className="flex justify-center items-start w-6/12 mt-20">
+      <div className="flex justify-center items-start w-6/12 tablet:w-auto tablet:h-auto mt-20">
         {selectedFile || promoUrl ? (
           <ReactPlayer
             ref={videoEl}

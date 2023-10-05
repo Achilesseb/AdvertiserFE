@@ -76,7 +76,7 @@ export const generateTeamsTableHeaderElements = (
     type: "input",
     inputPlaceHolder: "Search after team name",
     styleModifiers:
-      "col-start-1 col-end-3 w-full border-2 rounded-md border-neutral-60 text-center hover:border-primary-60  focus:border-primary-60 focus-ring",
+      "col-start-1 col-end-3 w-full text-xl px-4 py-2 border-2 rounded-md border-neutral-60 text-center hover:border-primary-60  focus:border-primary-60 focus-ring",
   },
   addNew: {
     type: "button",
