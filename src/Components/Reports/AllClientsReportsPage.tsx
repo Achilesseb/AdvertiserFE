@@ -32,9 +32,13 @@ export const AllClientsReportsPage = () => {
   const defaultPromotionFilters = {
     ...(nameFilter && { name: nameFilter }),
     ...(selectedDateRange?.startDate && {
-      startDate: selectedDateRange.startDate,
+      startDate: new Date(
+        selectedDateRange.startDate.toISOString()
+      ).toDateString(),
     }),
-    ...(selectedDateRange?.endDate && { endDate: selectedDateRange.endDate }),
+    ...(selectedDateRange?.endDate && {
+      endDate: new Date(selectedDateRange.endDate.toISOString()).toDateString(),
+    }),
   };
 
   const clientsTableHeaderElements = generateClientsReportsTableHeaderElements;

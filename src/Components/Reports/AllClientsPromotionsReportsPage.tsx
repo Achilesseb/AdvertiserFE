@@ -15,6 +15,7 @@ import { ClientModel } from "../Clients/clientsAnnexes/clientsPageTemplate";
 import { TableComponent } from "../Table/Table";
 import { DateSelection } from "./AllClientsReportsPage";
 import { DatePickerComponent } from "../DatePickerComponent";
+import dayjs from "dayjs";
 
 export const AllClientsPromotionsReportsPage = ({
   clientId,
@@ -32,9 +33,13 @@ export const AllClientsPromotionsReportsPage = ({
     ...(clientId && { clientId }),
     ...(nameFilter && { title: nameFilter }),
     ...(selectedDateRange?.startDate && {
-      startDate: selectedDateRange.startDate,
+      startDate: new Date(
+        selectedDateRange.startDate.toISOString()
+      ).toDateString(),
     }),
-    ...(selectedDateRange?.endDate && { endDate: selectedDateRange.endDate }),
+    ...(selectedDateRange?.endDate && {
+      endDate: new Date(selectedDateRange.endDate.toISOString()).toDateString(),
+    }),
   };
 
   const clientsTableHeaderElements =

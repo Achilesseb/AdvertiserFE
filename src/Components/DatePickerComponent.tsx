@@ -1,6 +1,10 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { RangeKeyDict, DateRange, DefinedRange } from "react-date-range";
 import { DateSelection } from "./Reports/AllClientsReportsPage";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 export const DatePickerComponent = ({
   setSelectedDateRange,
