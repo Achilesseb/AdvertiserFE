@@ -149,14 +149,14 @@ export const AllConstantsPage = () => {
   };
   const formStylesModifiers = {
     formContainerStyles:
-      "relative h-full  w-full flex flex-col gap-4 justify-start left-0 bg-white rounded-xl px-10 top-0",
+      "relative h-full  w-full flex flex-col gap-4 justify-start left-0 bg-white rounded-xl px-10 top-0 tablet:px-0",
     formInputsContainerStyles: "flex flex-col gap-4 mb-4 mt-4",
     formTitleStyles:
       "flex justify-between desktop:w-8/12 laptop:w-12/12 mb-2 mt-2 ",
     formButtonContainerStyles: "mb-4  bottom-0 w-full flex",
   };
   return (
-    <div className="h-full px-10 py-4 flex flex-col gap-4 w-full">
+    <div className="h-full px-10 tablet:px-0 py-4 flex flex-col gap-4 w-full  tablet:w-12/12 tablet:p-4 border-2 border-neutral-60">
       {showEmbededForm || clickableEntityId ? (
         <Form
           headlessForm={false}

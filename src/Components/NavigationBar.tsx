@@ -42,9 +42,9 @@ export const NavigationBar = () => {
 
       {session && session.user.user_metadata?.role === "admin" ? (
         <div
-          className={`top-navbar  laptop:w-auto laptop:col-start-2 laptop:col-end-7 text-primary-99 laptop:visible desktop:visible"   laptop:w-8/12${
+          className={`top-navbar  laptop:w-auto laptop:col-start-2 laptop:col-end-7 text-primary-99 laptop:visible desktop:visible" ${
             verticalNavigation
-              ? "tablet:absolute tablet:top-20 tablet:visible  z-50"
+              ? "tablet:absolute tablet:top-[4.9rem] tablet:visible tablet:w-full  z-50"
               : " laptop:relative laptop:inline-flex laptop:flex-grow tablet:hidden laptop:h-full"
           }`}
           id="navigation"

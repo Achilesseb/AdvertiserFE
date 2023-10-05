@@ -67,9 +67,9 @@ export const SettingsComponent = () => {
   };
 
   return (
-    <div className="flex w-full gap-10">
-      <div className="flex flex-col  justify-center items-center gap-6 w-4/12">
-        <div className="font-bold text-headlineSmall mb-4 text-primary-40 text-lg ">
+    <div className="flex w-full gap-10 tablet:gap-2 tablet:flex-col  laptop:mt-2">
+      <div className="flex flex-col  justify-center items-center tablet:gap-4 laptop:gap-6 laptop:w-4/12 tablet:w-12/12 tablet:p-4 border-2 border-neutral-60">
+        <div className="font-bold text-headlineSmall mb-4 text-primary-40 text-lg">
           Change user data
         </div>
         <InputComponent
@@ -82,7 +82,7 @@ export const SettingsComponent = () => {
           labelRequired
           labelRequiredClassName="text-error-60"
           inputClassName="w-full"
-          containerClassName={`desktop:w-4/5 laptop:w-full `}
+          containerClassName={`desktop:w-4/5 laptop:w-full tablet:w-full`}
         />
 
         <InputComponent
@@ -94,7 +94,7 @@ export const SettingsComponent = () => {
           labelRequired
           value={newPassword}
           labelRequiredClassName="text-error-60"
-          containerClassName={`desktop:w-4/5 laptop:w-full `}
+          containerClassName={`desktop:w-4/5 laptop:w-full tablet:w-full`}
           inputClassName="w-full"
         />
         <InputComponent
@@ -106,7 +106,7 @@ export const SettingsComponent = () => {
           onChange={(e) => setConfirmNewPassword(e.target.value)}
           labelRequired
           labelRequiredClassName="text-error-60"
-          containerClassName={`desktop:w-4/5 laptop:w-full`}
+          containerClassName={`desktop:w-4/5 laptop:w-full tablet:w-full`}
           inputClassName="w-full"
         />
 
@@ -115,7 +115,7 @@ export const SettingsComponent = () => {
           buttonType="button"
           styleType="filled"
           buttonText="Change password"
-          modifier="desktop:w-3/5 laptop:w-4/5 mt-4"
+          modifier="desktop:w-3/5 laptop:w-4/5 mt-4 tablet:w-full"
         />
 
         <DefaultButtonComponent
@@ -123,7 +123,7 @@ export const SettingsComponent = () => {
           buttonType="button"
           styleType="filled"
           buttonText="Log out"
-          modifier="desktop:w-3/5 laptop:w-4/5 mt-10"
+          modifier="desktop:w-3/5 laptop:w-4/5 mt-10 tablet:w-full"
         />
       </div>
       <AllConstantsPage />
