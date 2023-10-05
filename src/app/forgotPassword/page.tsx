@@ -25,9 +25,9 @@ const ForgotPassword = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <div className="flex flex-col justify-center items-center w-[40vw] h-[80vh] border-2 border-primary-40">
+      <div className="flex flex-col justify-center items-center w-[40vw] tablet:w-full tablet:h-full h-[80vh] border-2 border-primary-40">
         <div className="font-bold text-headlineSmall mb-20 text-primary-40 text-2xl">
-          Reset your SmartAds password
+          Reset your password
         </div>
         <InputComponent
           name="email"
@@ -39,7 +39,7 @@ const ForgotPassword = () => {
           labelRequiredClassName="text-error-60"
           onChange={(e) => setEmail(e.target.value)}
           inputClassName="w-full "
-          containerClassName={`w-3/5 text-primary-50`}
+          containerClassName={`w-4/5 text-primary-50`}
         />
 
         {!emailSent ? (
@@ -48,7 +48,7 @@ const ForgotPassword = () => {
             onButtonClick={onSubmit}
             styleType="filled"
             buttonText="Reset password"
-            modifier="w-2/5 mt-10"
+            modifier="laptop:w-2/5 mt-10 tablet:4/5"
           />
         ) : (
           <p className="w-3/5 text-success-30 mt-4 border-2 border-neutral-40 p-5">

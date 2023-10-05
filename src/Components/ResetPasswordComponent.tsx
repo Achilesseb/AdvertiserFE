@@ -60,9 +60,9 @@ const ResetPasswordComponent = () => {
   };
 
   return (
-    <div className="w-full h-full flex justify-center items-center mobile:bg-primary-50 ">
-      <div className="flex flex-col justify-center items-center text-center tablet:w-full laptop:w-[40vw] desktop:w-[40vw] laptop:h-[80vh] desktop:h-[80vh] tablet:h-full border-4 laptop:border-primary-40 desktop:border-primary-40 tablet:border-none">
-        <div className="font-bold text-headlineSmall mb-20 tablet:text-white laptop:text-primary-40 desktop:text-primary-40 text-2xl">
+    <div className="w-full h-full flex justify-center items-center mobile:bg-primary-50 tablet:bg-primary-50 ">
+      <div className="flex flex-col justify-center items-center text-center tablet:w-full laptop:w-[40vw] mobile:gap-10 desktop:w-[40vw] laptop:h-[80vh] desktop:h-[80vh] tablet:h-full border-4 laptop:border-primary-40 desktop:border-primary-40 tablet:border-none">
+        <div className="font-bold text-headlineSmall laptop:mb-20 tablet:text-white mobile:text-white  laptop:text-primary-40 desktop:text-primary-40 text-2xl">
           Reset password
         </div>
 
@@ -73,8 +73,9 @@ const ResetPasswordComponent = () => {
           label="Password"
           onChange={(e) => setPassword(e.target.value)}
           labelRequired
+          labelClassName="tablet:text-white mobile:text-white"
           labelRequiredClassName="text-error-60"
-          containerClassName={`w-4/5 text-primary-50 mt-6 tablet:text-white latpop:text-primary-40 desktop:text-primary-40 `}
+          containerClassName={`w-4/5 text-primary-50 mt-6 tablet:text-primary-30 mobile:text-primary-30 laptop:text-primary-40 desktop:text-primary-40 `}
           inputClassName="w-full"
         />
         <InputComponent
@@ -84,8 +85,9 @@ const ResetPasswordComponent = () => {
           label="Confirm new password"
           onChange={(e) => setNewPassword(e.target.value)}
           labelRequired
+          labelClassName="tablet:text-white mobile:text-white"
           labelRequiredClassName="text-error-60"
-          containerClassName={`w-4/5 text-primary-50 mt-6 tablet:text-white latpop:text-primary-40 desktop:text-primary-40 `}
+          containerClassName={`w-4/5 text-primary-50 mt-6 tablet:text-primary-30 mobile:text-primary-30 latpop:text-primary-40 desktop:text-primary-40 `}
           inputClassName="w-full"
         />
 

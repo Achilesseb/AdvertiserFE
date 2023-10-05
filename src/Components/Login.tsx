@@ -24,9 +24,9 @@ export const SignInFormComponent = () => {
   };
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <div className="flex flex-col justify-center items-center w-[40vw] h-[80vh] border-2 border-primary-40">
-        <div className="font-bold text-headlineSmall mb-20 text-primary-40 text-2xl">
+    <div className="w-full h-full flex flex-col justify-center items-center ">
+      <div className="flex flex-col justify-center items-center mobile:gap-10 laptop:w-[40vw] h-[80vh] tablet:h-full tablet:w-full border-2 border-primary-40 ">
+        <div className="font-bold text-headlineSmall laptop:mb-20 tablet:mb-4 text-primary-40 text-2xl">
           Login to SmartADS
         </div>
         <InputComponent
@@ -63,7 +63,7 @@ export const SignInFormComponent = () => {
           onButtonClick={onSubmit}
           styleType="filled"
           buttonText="Log In"
-          modifier="w-2/5 mt-10"
+          modifier="laptop:w-2/5 tablet:w-4/5 mt-10"
         />
       </div>
     </div>
