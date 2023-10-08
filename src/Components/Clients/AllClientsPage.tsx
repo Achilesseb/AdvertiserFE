@@ -59,7 +59,7 @@ export const AllClientsPage = ({
   };
 
   return (
-    <div className=" px-20 py-4 flex flex-col gap-4 border-b-4 border-l-2 rounded-md border-neutral-80 shadow-lg p-20  tablet:px-0 tablet:p-0 ">
+    <div className=" px-20 py-4 flex flex-col h-full gap-4 border-b-4 border-l-2 rounded-md border-neutral-80 shadow-lg p-20  tablet:px-0 tablet:p-0 ">
       <TableComponent<ClientModel>
         setToDeleteDataIds={setToDeleteDataIds}
         polishedHeaderElements={polishedClientsTableHeaderElements}

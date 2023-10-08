@@ -7,10 +7,11 @@ module.exports = {
   ],
   theme: {
     screens: {
-      mobile: { min: "100px", max: "600px" },
-      tablet: { min: "100px", max: "1200px" },
-      laptop: "1200px",
-      desktop: "1728px",
+      mobile: { min: "300px", max: "500px" },
+      landscapeMobile: { min: "500px", max: "1600px" },
+      tablet: { min: "300px", max: "1631px" },
+      laptop: "1630px",
+      desktop: "1900px",
     },
     fontFamily: {
       medium: ["Inter-500"],

@@ -1,16 +1,63 @@
 import { supabase } from "@/supabase";
 import { AuthSession } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
-import { AiOutlineUser } from "react-icons/ai";
+import {
+  AiOutlineBarChart,
+  AiOutlineCar,
+  AiOutlineSetting,
+  AiOutlineTablet,
+  AiOutlineTeam,
+} from "react-icons/ai";
 import "../styles/input.css";
 import { MenuSvg } from "@/constants/svg";
+import { BsPinMap } from "react-icons/bs";
+import { TbUserDollar } from "react-icons/tb";
+import { usePathname } from "next/navigation";
+
+const navigationTemplate = {
+  dashboard: {
+    label: "Dashboard",
+    path: "/dashboard",
+    icon: <BsPinMap />,
+  },
+  clients: {
+    label: "Clients",
+    path: "/clients",
+    icon: <TbUserDollar />,
+  },
+  drivers: {
+    label: "Drivers",
+    path: "/drivers",
+    icon: <AiOutlineCar />,
+  },
+  devices: {
+    label: "Devices",
+    path: "/devices",
+    icon: <AiOutlineTablet />,
+  },
+  teams: {
+    label: "Team",
+    path: "/teams",
+    icon: <AiOutlineTeam />,
+  },
+  reports: {
+    label: "Reports",
+    path: "/reports",
+    icon: <AiOutlineBarChart />,
+  },
+  settings: {
+    label: "Settings",
+    path: "/settings",
+    icon: <AiOutlineSetting />,
+  },
+};
 
 export const NavigationBar = () => {
   const [verticalNavigation, setVerticalNavigation] = useState(false);
   const [session, setSession] = useState<AuthSession | null>(null);
-
+  const pathname = usePathname();
   useEffect(() => {
-    if (window !== undefined && window.innerWidth > 1200) {
+    if (window !== undefined && window.innerWidth > 1800) {
       setVerticalNavigation(false);
     }
   }, []);
@@ -20,11 +67,11 @@ export const NavigationBar = () => {
       setSession(session);
     });
   }, []);
-
+  console.log(pathname);
   return (
-    <nav className="tablet:relative  w-full grid grid-cols-6 items-center bg-primary-50 text-primary-99 py-4 px-10 tablet:h-20 laptop:h-28 laptop:px-20 ">
+    <nav className="w-full flex items-center bg-primary-50 text-primary-99 py-4 px-10 tablet:h-28 laptop:h-28 laptop:px-20 gap-4 z-99">
       {session && session.user.user_metadata?.role === "admin" && (
-        <div className="  tablet:visible laptop:hidden desktop:hidden">
+        <div className=" tablet:visible laptop:hidden desktop:hidden ">
           <button
             onClick={() => setVerticalNavigation(!verticalNavigation)}
             className="text-white  focus:outline-none"
@@ -34,17 +81,23 @@ export const NavigationBar = () => {
         </div>
       )}
 
-      <a href="/" className="p-2 mr-4 inline-flex items-center no-underline">
-        <span className="text-xl text-white font-bold uppercase tracking-wide">
-          Advertiser
+      <a
+        href="/"
+        className="p-2 inline-flex items-center no-underline gap-1 text-3xl font-roboto"
+      >
+        <span className=" text-white font-bold uppercase tracking-widest">
+          Gorilla
+        </span>
+        <span className="px-2 text-primary-50 bg-white font-bold uppercase tracking-widest py-1 rounded-md">
+          Ads
         </span>
       </a>
 
       {session && session.user.user_metadata?.role === "admin" ? (
         <div
-          className={`top-navbar  laptop:w-auto laptop:col-start-2 laptop:col-end-7 text-primary-99 laptop:visible desktop:visible" ${
+          className={` top-navbar  laptop:w-auto  text-primary-99 laptop:visible desktop:visible" ${
             verticalNavigation
-              ? "tablet:absolute tablet:top-[4.9rem] tablet:visible tablet:w-full  z-50"
+              ? "tablet:absolute mobile:top-[100px] landscapeMobile:top-[92px] mobile:w-full landscapeMobile:w-[100%] left-0 tablet:visible z-50"
               : " laptop:relative laptop:inline-flex laptop:flex-grow tablet:hidden laptop:h-full"
           }`}
           id="navigation"
@@ -52,69 +105,28 @@ export const NavigationBar = () => {
           <ul
             className={`h-full w-full flex tablet:justify-center laptop:justify-evenly tablet:p-4 ${
               verticalNavigation
-                ? " tablet:flex-col tablet:gap-2 tablet:border-b-2 tablet:border-r-2 tablet:border-l-2 tablet:border-primary-50 tablet:bg-neutral-90 tablet:rounded-xl"
-                : " laptop:inline-flex laptop:flex-row laptop:ml-auto laptop:w-auto laptop:h-full laptop:items-center laptop:text-3xl desktop:text-2xl laptop:gap-10"
+                ? " mobile:flex-col landscapeMobile:flex-row landscapeMobile:flex-wrap landscapeMobile:px-20 tablet:gap-2 tablet:border-b-2 tablet:border-r-2 tablet:border-l-2 tablet:border-primary-50 tablet:bg-white tablet:rounded-xl"
+                : " laptop:inline-flex laptop:flex-row laptop:ml-auto laptop:w-auto laptop:h-full laptop:items-center laptop:text-2xl laptop:gap-4 desktop:text-2xl "
             }`}
           >
-            <li className="tablet:border-2 tablet:border-neutral-40 tablet:min-w-40 tablet:bg-primary-50">
-              <a
-                href="/"
-                className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded  hover:text-primary-40 text-primary-99 items-center justify-center hover:bg-white no-underline"
+            {Object.values(navigationTemplate).map((item) => (
+              <li
+                className="tablet:border-2  tablet:border-neutral-40 tablet:bg-primary-50 "
+                key={item.label}
               >
-                <span className=" ">Dashboard</span>
-              </a>
-            </li>
-            <li className="tablet:border-2 tablet:border-neutral-40 tablet:bg-primary-50">
-              <a
-                href="/clients"
-                className="flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded   items-center hover:text-primary-40 text-primary-99   justify-center hover:bg-white  no-underline"
-              >
-                <span className="">Clients</span>
-              </a>
-            </li>
-            <li className="tablet:border-2 tablet:border-neutral-40 tablet:bg-primary-50">
-              <a
-                href="/drivers"
-                className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded  items-center justify-center hover:text-primary-40 text-primary-99   hover:bg-white  no-underline"
-              >
-                <span className="">Drivers</span>
-              </a>
-            </li>
-            <li className="tablet:border-2 tablet:border-neutral-40 tablet:bg-primary-50">
-              <a
-                href="/devices"
-                className=" flex lg:inline-flex lg:w-auto w-full px-4 py-2 rounded  items-center hover:text-primary-40 text-primary-99   justify-center hover:bg-white  no-underline"
-              >
-                <span className="">Devices</span>
-              </a>
-            </li>
-            <li className="tablet:border-2 tablet:border-neutral-40 tablet:bg-primary-50">
-              <a
-                href="/teams"
-                className=" flex  lg:inline-flex lg:w-auto w-full px-4 py-2 rounded  items-center justify-center text-primary-99 hover:bg-white hover:text-primary-40   no-underline"
-              >
-                <span className=" ">Teams</span>
-              </a>
-            </li>
-            <li className="tablet:border-2 tablet:border-neutral-40 tablet:bg-primary-50">
-              <a
-                href="/reports"
-                className="lg:inline-flex lg:w-auto w-full flex px-4 py-2 rounded   items-center justify-center text-primary-99 hover:bg-white hover:text-primary-40  no-underline"
-              >
-                <span className="">Reports</span>
-              </a>
-            </li>
-            <li className="tablet:border-2 tablet:border-neutral-40 tablet:bg-primary-50">
-              {session ? (
                 <a
-                  href="/settings"
-                  className="flex gap-2 w-full px-3 py-2 rounded  hover:text-primary-40 hover:text-opacity-100  items-center justify-center text-primary-99 hover:bg-white  no-underline"
+                  href={item.path}
+                  className={`w-full px-4 py-2 rounded landscapeMobile:min-w-[170px] hover:bg-white ease-in-out hover:text-primary-40 hover:shadow-lg no-underline flex transition-transform duration-200 justify-center items-center gap-2 ${
+                    pathname.includes(item.path)
+                      ? "bg-white text-primary-40"
+                      : "text-primary-99"
+                  }`}
                 >
-                  <AiOutlineUser />
-                  Settings
+                  {item.icon}
+                  <span>{item.label}</span>
                 </a>
-              ) : null}
-            </li>
+              </li>
+            ))}
           </ul>
         </div>
       ) : null}

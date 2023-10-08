@@ -366,9 +366,9 @@ export const AttentionSVG = ({ disabled, color, width, height }: SvgProps) => {
 export const MenuSvg = ({ disabled, color, width, height }: SvgProps) => {
   return (
     <svg
-      width={`${width ? width : "22"}`}
-      height={`${height ? height : "19"}`}
-      viewBox="0 0 22 19"
+      width={`${width ? width : "40"}`}
+      height={`${height ? height : "30"}`}
+      viewBox="0 0 30 19"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
