@@ -9,8 +9,8 @@ module.exports = {
     screens: {
       mobile: { min: "300px", max: "500px" },
       landscapeMobile: { min: "500px", max: "1600px" },
-      tablet: { min: "300px", max: "1631px" },
-      laptop: "1630px",
+      tablet: { min: "300px", max: "1600px" },
+      laptop: "1600px",
       desktop: "1900px",
     },
     fontFamily: {

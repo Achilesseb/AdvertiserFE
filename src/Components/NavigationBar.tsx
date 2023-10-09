@@ -57,7 +57,7 @@ export const NavigationBar = () => {
   const [session, setSession] = useState<AuthSession | null>(null);
   const pathname = usePathname();
   useEffect(() => {
-    if (window !== undefined && window.innerWidth > 1800) {
+    if (window !== undefined && window.innerWidth > 1600) {
       setVerticalNavigation(false);
     }
   }, []);
