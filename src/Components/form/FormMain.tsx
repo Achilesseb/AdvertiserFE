@@ -165,7 +165,7 @@ const Form = <DataType extends {}, U extends FieldValues>({
   return (
     <div
       className={mergeStyles(
-        "w-full h-full px-20 tablet:px-0",
+        "w-full h-full px-20 mobile:p-2 landscapeMobile:p-6",
         containerStyles
       )}
     >

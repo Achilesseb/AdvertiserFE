@@ -9,7 +9,7 @@ export const GET_ALL_CONSTANTS = gql`
         identifier
         inUse
       }
-      cont
+      count
     }
   }
 `;

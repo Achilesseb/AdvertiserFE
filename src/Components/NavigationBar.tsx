@@ -36,7 +36,7 @@ const navigationTemplate = {
     icon: <AiOutlineTablet />,
   },
   teams: {
-    label: "Team",
+    label: "Teams",
     path: "/teams",
     icon: <AiOutlineTeam />,
   },

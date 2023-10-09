@@ -30,7 +30,7 @@ export const DatePickerComponent = ({
     <>
       {!showDatePicker ? (
         <button
-          className="px-4 border-2 border-neutral-40 p-2 rounded-xl ml-2 laptop:w-1/12 tablet:w-10/12 text-error-50 hover:text-white hover:bg-primary-60 tablet:self-center  text-xl"
+          className="px-4 border-2 border-neutral-40 p-2 rounded-xl ml-2 laptop:w-1/12 tablet:w-10/12 text-primary-30 hover:text-white hover:bg-primary-60 tablet:self-center  text-xl"
           onClick={() => setShowDatePicker(!showDatePicker)}
         >
           {showDatePicker ? "Hide" : "Pick dates"}
@@ -40,13 +40,13 @@ export const DatePickerComponent = ({
         <div className="laptop:w-2/12">
           <div className="flex justify-between mb-2">
             <button
-              className=" text-success-50 px-4 border-2 ml-2 mt-2 border-neutral-40 p-2 rounded-xl w-5/12 self-center hover:text-white hover:bg-primary-60  text-xl"
+              className=" text-success-50 px-4 border-2 ml-2  border-neutral-40 p-2 rounded-xl w-5/12 self-center hover:text-white hover:bg-primary-60  text-xl"
               onClick={onClickClear}
             >
               Clear
             </button>
             <button
-              className="px-4 border-2 border-neutral-40 p-2 rounded-xl ml-2 laptop:w-5/12 tablet:w-10/12 self-center text-error-50 hover:text-white hover:bg-primary-60  text-xl"
+              className="px-4 border-2 border-neutral-40 p-2 rounded-xl ml-2  laptop:w-5/12 tablet:w-10/12 self-center text-primary-30 hover:text-white hover:bg-primary-60  text-xl"
               onClick={() => setShowDatePicker(!showDatePicker)}
             >
               Hide

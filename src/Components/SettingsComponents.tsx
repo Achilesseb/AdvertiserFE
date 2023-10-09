@@ -68,7 +68,7 @@ export const SettingsComponent = () => {
 
   return (
     <div className="flex w-full gap-10 tablet:gap-2 tablet:flex-col  laptop:mt-2">
-      <div className="flex flex-col  justify-center items-center tablet:gap-4 laptop:gap-6 laptop:w-4/12 tablet:w-12/12 tablet:p-4 border-2 border-neutral-60">
+      <div className="flex flex-col  justify-center items-center tablet:gap-4 laptop:gap-6 laptop:w-4/12 tablet:w-12/12 tablet:p-4 border-2 laptop:py-4 border-neutral-60">
         <div className="font-bold text-headlineSmall mb-4 text-primary-40 text-lg">
           Change user data
         </div>
