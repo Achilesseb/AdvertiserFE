@@ -15,7 +15,6 @@ import { ClientModel } from "../Clients/clientsAnnexes/clientsPageTemplate";
 import { TableComponent } from "../Table/Table";
 import { DateSelection } from "./AllClientsReportsPage";
 import { DatePickerComponent } from "../DatePickerComponent";
-import dayjs from "dayjs";
 
 export const AllClientsPromotionsReportsPage = ({
   clientId,

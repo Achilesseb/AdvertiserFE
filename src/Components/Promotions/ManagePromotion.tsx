@@ -121,6 +121,7 @@ export const ManagePromotion = ({
           <div className="w-8/10 flex gap-4 items-center justify-between tablet:flex-col">
             <span>Video file: </span>
             <input
+              accept="video/mp4"
               type="file"
               onChange={handleFileChange}
               style={{ display: "none" }}

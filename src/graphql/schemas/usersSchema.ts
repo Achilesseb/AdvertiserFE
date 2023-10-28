@@ -85,7 +85,7 @@ export const EDIT_USER = gql`
       address
       car
       registrationPlate
-      driverId
+      id
       device {
         id
         createdAt
