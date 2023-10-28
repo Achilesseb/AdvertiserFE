@@ -109,7 +109,7 @@ export const ADD_NEW_USER = gql`
       address
       car
       registrationPlate
-      driverId
+      id
       device {
         id
         createdAt
