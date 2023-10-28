@@ -55,7 +55,7 @@ export const GET_USER_BY_ID = gql`
       address
       car
       registrationPlate
-      driverId
+      id
       device {
         id
         createdAt
