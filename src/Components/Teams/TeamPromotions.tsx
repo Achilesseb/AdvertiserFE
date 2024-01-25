@@ -55,7 +55,7 @@ export const TeamPromotions = ({
       },
     },
   });
-
+  console.log(searchParams, "Search params teams promotions");
   const { data, refetch } = useQuery<GetTeamPromosResultType>(
     GET_TEAMS_PROMOTIONS,
     {

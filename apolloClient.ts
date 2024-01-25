@@ -2,7 +2,6 @@ import { supabase } from "@/supabase";
 import { setContext } from "@apollo/client/link/context";
 import {
   ApolloClient,
-  ApolloLink,
   HttpLink,
   InMemoryCache,
   from,

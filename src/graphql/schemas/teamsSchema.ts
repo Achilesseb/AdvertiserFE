@@ -113,8 +113,8 @@ export const DELETE_USERS_FROM_TEAMS = gql`
 `;
 
 export const GET_TEAMS_PROMOTIONS = gql`
-  query GetPromotionByTeam {
-    getPromotionByTeam {
+  query GetPromotionByTeam($input: GetAllPromotionsByTeamInput) {
+    getPromotionByTeam(input: $input) {
       count
       data {
         id
