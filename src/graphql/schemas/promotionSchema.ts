@@ -109,8 +109,8 @@ export const ADD_NEW_PROMOTION_TO_TEAM = gql`
 `;
 
 export const DELETE_PROMOTIONS_FROM_TEAMS = gql`
-  mutation DeletePromotionsFromTeam($promotionIds: [String]!) {
-    deletePromotionsFromTeam(promotionIds: $promotionIds) {
+  mutation DeletePromotionsFromTeam($input: DeletePromotionsFromTeam) {
+    deletePromotionsFromTeam(input: $input) {
       count
     }
   }

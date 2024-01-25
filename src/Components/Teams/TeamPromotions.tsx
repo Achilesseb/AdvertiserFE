@@ -43,7 +43,10 @@ export const TeamPromotions = ({
     generateTeamPromotionsTableHeaderElements(router);
   const [deleteDriversFromTeams] = useMutation(DELETE_PROMOTIONS_FROM_TEAMS, {
     variables: {
-      promotionIds: toDeleteDataIds,
+      input: {
+        teamId: searchParams?.teamId,
+        promotionIds: toDeleteDataIds,
+      },
     },
   });
 
