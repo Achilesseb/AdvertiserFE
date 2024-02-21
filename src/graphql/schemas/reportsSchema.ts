@@ -29,3 +29,36 @@ export const GET_CLIENTS_PROMOTIONS_REPORTS = gql`
     }
   }
 `;
+
+export const GET_DRIVERS_REPORTS = gql`
+  query GetDriversReports($input: GetDriversReportsTypeInput) {
+    getDriversReports(input: $input) {
+      data {
+        id
+        driverName
+        totalDistance
+        trips
+        car
+        fleet
+      }
+      count
+    }
+  }
+`;
+
+export const GET_UNIQUE_DRIVER_REPORTS = gql`
+  query GetUniqueDriverReports($input: GetUniqueDriverReportsTypeInput) {
+    getUniqueDriverReports(input: $input) {
+      data {
+        id
+        driverName
+        totalDistance
+        trips
+        car
+        fleet
+        day
+      }
+      count
+    }
+  }
+`;
