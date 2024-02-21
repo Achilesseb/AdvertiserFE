@@ -1,7 +1,14 @@
 "use client";
 import React from "react";
-import { AllClientsReportsPage } from "@/Components/Reports/AllClientsReportsPage";
+import { ReportsPage } from "@/Components/Reports/AllClientsReportsPage";
 
-const DriversPage = () => <AllClientsReportsPage />;
+import { useSearchParams } from "next/navigation";
+
+const DriversPage = () => {
+  const { get } = useSearchParams();
+  const entity = get("entity");
+
+  return <ReportsPage {...(entity && { entity })} />;
+};
 
 export default DriversPage;
