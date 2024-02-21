@@ -13,7 +13,7 @@ export const DatePickerComponent = ({
   setSelectedDateRange: Dispatch<SetStateAction<DateSelection>>;
   selectedDateRange: DateSelection;
 }) => {
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(true);
 
   const handleSelect = (ranges: RangeKeyDict) => {
     setSelectedDateRange(ranges.selection as unknown as DateSelection);
@@ -30,7 +30,7 @@ export const DatePickerComponent = ({
     <>
       {!showDatePicker ? (
         <button
-          className="px-4 border-2 border-neutral-40 p-2 rounded-xl ml-2 laptop:w-1/12 tablet:w-10/12 text-primary-30 hover:text-white hover:bg-primary-60 tablet:self-center  text-xl"
+          className="px-4 border-2 border-neutral-40 p-2 rounded-xl ml-2 laptop:w-2/12 tablet:w-10/12 h-20 text-primary-30 hover:text-white hover:bg-primary-60 tablet:self-center  text-xl"
           onClick={() => setShowDatePicker(!showDatePicker)}
         >
           {showDatePicker ? "Hide" : "Pick dates"}
