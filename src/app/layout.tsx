@@ -1,5 +1,5 @@
 "use client";
-import { NavigationBar } from "@/Components/NavigationBar";
+import { NavigationBar } from "@/Components/Navigation/NavigationBar";
 import "../styles/input.css";
 
 import { ReactNode } from "react";

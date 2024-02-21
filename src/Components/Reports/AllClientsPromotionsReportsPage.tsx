@@ -5,22 +5,31 @@ import { useState } from "react";
 
 import {
   defaultClientPromotionsReportsColumns,
+  defaultUniqueDriverReportsColumns,
   generateClientsPromotionsReportsTableHeaderElements,
 } from "./reportsAnnexes/reportsPage";
 
 import { TableHeaderElement } from "../Table/TableHeader";
-import { GET_CLIENTS_PROMOTIONS_REPORTS } from "@/graphql/schemas/reportsSchema";
+import {
+  GET_CLIENTS_PROMOTIONS_REPORTS,
+  GET_UNIQUE_DRIVER_REPORTS,
+} from "@/graphql/schemas/reportsSchema";
 import { ColumnDefBase } from "@tanstack/react-table";
 import { ClientModel } from "../Clients/clientsAnnexes/clientsPageTemplate";
 import { TableComponent } from "../Table/Table";
 import { DateSelection } from "./AllClientsReportsPage";
 import { DatePickerComponent } from "../DatePickerComponent";
 
-export const AllClientsPromotionsReportsPage = ({
+export const UniqueReportsPage = ({
   clientId,
+  entity,
+  driverId,
 }: {
-  clientId: string;
+  entity: string;
+  clientId?: string;
+  driverId?: string;
 }) => {
+  const overallEntityCondition = entity === "clients";
   const [selectedDateRange, setSelectedDateRange] = useState<DateSelection>({
     startDate: new Date(),
     endDate: new Date(),
@@ -30,6 +39,7 @@ export const AllClientsPromotionsReportsPage = ({
   const [nameFilter, setNameFilter] = useState<string>("");
   const defaultPromotionFilters = {
     ...(clientId && { clientId }),
+    ...(driverId && { driverId }),
     ...(nameFilter && { title: nameFilter }),
     ...(selectedDateRange?.startDate && {
       startDate: new Date(
@@ -45,11 +55,13 @@ export const AllClientsPromotionsReportsPage = ({
     generateClientsPromotionsReportsTableHeaderElements;
 
   const polishedClientsReportsTableHeaderElements = {
-    searchInput: {
-      ...clientsTableHeaderElements.searchInput,
-      onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-        setNameFilter(event.target.value as string),
-    },
+    ...(overallEntityCondition && {
+      searchInput: {
+        ...clientsTableHeaderElements.searchInput,
+        onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+          setNameFilter(event.target.value as string),
+      },
+    }),
   } as Record<string, TableHeaderElement>;
 
   return (
@@ -61,12 +73,22 @@ export const AllClientsPromotionsReportsPage = ({
       <TableComponent<ClientModel>
         polishedHeaderElements={polishedClientsReportsTableHeaderElements}
         rowsClickable={false}
-        headerData="Client promotions reports"
-        apolloQuery={GET_CLIENTS_PROMOTIONS_REPORTS}
+        headerData={
+          overallEntityCondition ? "Promotions reports" : "Driver reports"
+        }
+        apolloQuery={
+          overallEntityCondition
+            ? GET_CLIENTS_PROMOTIONS_REPORTS
+            : GET_UNIQUE_DRIVER_REPORTS
+        }
         columns={
-          defaultClientPromotionsReportsColumns as unknown as Array<
-            ColumnDefBase<ClientModel, string>
-          >
+          overallEntityCondition
+            ? (defaultClientPromotionsReportsColumns as unknown as Array<
+                ColumnDefBase<ClientModel, string>
+              >)
+            : (defaultUniqueDriverReportsColumns as unknown as Array<
+                ColumnDefBase<ClientModel, string>
+              >)
         }
         filters={defaultPromotionFilters}
       />

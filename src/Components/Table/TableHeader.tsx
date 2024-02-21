@@ -73,7 +73,7 @@ export const TableHeader = ({
   if (_.isNil(elements) || !_.isObject(elements)) return;
 
   return (
-    <div className="grid grid-cols-10 gap-4 tablet:flex tablet:flex-col">
+    <div className="grid grid-cols-12 gap-4 tablet:flex tablet:flex-col">
       {Object.values(elements).map((element) => getHeaderElement(element))}
     </div>
   );

@@ -33,10 +33,15 @@ const defaultTeamsColumn = [
     header: "Drivers",
     cell: (info) => (
       <p
-        className="w-12/12 truncate flex justify-center items-center"
+        className="truncate flex justify-center items-center"
         title={info.getValue()}
       >
-        {info.getValue()}
+        {info
+          .getValue()
+          ?.split(",")
+          .filter((_value, index) => index < 3)
+          .join(",")}
+        ...
       </p>
     ),
     footer: (info) => info.column.id,
@@ -76,7 +81,7 @@ export const generateTeamsTableHeaderElements = (
     type: "input",
     inputPlaceHolder: "Search after team name",
     styleModifiers:
-      "col-start-1 col-end-3 w-full text-xl px-4 py-2 border-2 rounded-md border-neutral-60 text-center hover:border-primary-60  focus:border-primary-60 focus-ring",
+      "col-start-1 col-end-4 w-full text-xl px-4 py-2 border-2 rounded-md border-neutral-60 text-center hover:border-primary-60  focus:border-primary-60 focus-ring",
   },
   addNew: {
     type: "button",

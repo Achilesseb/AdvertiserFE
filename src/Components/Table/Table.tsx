@@ -65,6 +65,7 @@ export const TableComponent = <DataType extends {}>({
   externalTotalPages,
   rowClickFunction,
   fetchPolicy,
+  routerParams,
 }: {
   externalData?: DataType[];
   externalPagination?: {
@@ -87,6 +88,7 @@ export const TableComponent = <DataType extends {}>({
   rowClickFunction?: (row: Row<DataType>) => void;
   fetchPolicy?: string;
   customQueryParams?: Record<string, unknown>;
+  routerParams?: Record<string, unknown>;
 }) => {
   const [dataToRender, setDataToRender] = useState<Array<DataType>>([]);
   const [totalCount, setTotalCount] = useState<number | null>();
